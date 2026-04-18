@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+/*
+ * DB Heavent v3.2.1 — loaded as raw @font-face to preserve the font's native
+ * vertical metrics. Using next/font/local applies automatic ascent/descent
+ * overrides that visibly float Thai tone marks above the base glyphs.
+ */
+@font-face {
+  font-family: "DB Heavent";
+  src: url("/fonts/heavent-thin.woff2") format("woff2"),
+       url("/fonts/heavent-thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DB Heavent";
+  src: url("/fonts/heavent-light.woff2") format("woff2"),
+       url("/fonts/heavent-light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DB Heavent";
+  src: url("/fonts/heavent-regular.woff2") format("woff2"),
+       url("/fonts/heavent-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DB Heavent";
+  src: url("/fonts/heavent-medium.woff2") format("woff2"),
+       url("/fonts/heavent-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DB Heavent";
+  src: url("/fonts/heavent-bold.woff2") format("woff2"),
+       url("/fonts/heavent-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-navy-50: #eaf0f8;
+  --color-navy-100: #c9d5e8;
+  --color-navy-200: #95a9c7;
+  --color-navy-300: #5c7ba2;
+  --color-navy-400: #2f517d;
+  --color-navy-500: #16385f;
+  --color-navy-600: #0f2947;
+  --color-navy-700: #0b1f38;
+  --color-navy-800: #081729;
+  --color-navy-900: #04101d;
+  --color-navy-950: #020810;
+
+  --color-orange-tcca: #e87a26;
+  --color-orange-light: #f4a35b;
+  --color-orange-soft: #fdecd8;
+  --color-cream: #fff8ef;
+
+  --color-accent-pink: #ff5a8a;
+  --color-accent-yellow: #f9e24a;
+  --color-accent-lime: #b2ea3a;
+  --color-accent-cyan: #3ed0e6;
+  --color-accent-violet: #8a5cff;
+
+  /*
+   * Primary typography: Google Sans (Latin) + DB Heavent (Thai) per brand.
+   * Both are commercial and not distributed via Google Fonts, so they are
+   * listed first and only render when installed on the user's system.
+   * Otherwise the stack falls back to Plus Jakarta Sans (Latin, closest
+   * humanist geometric sans) and IBM Plex Sans Thai Looped (Thai, looped).
+   */
+  /* Body copy: Google Sans (if installed) with Plus Jakarta Sans (Latin)
+     and IBM Plex Sans Thai Looped (Thai) as free-licensed fallbacks. DB
+     Heavent is intentionally excluded here — it's only used for display. */
+  --font-sans:
+    "Google Sans", "Google Sans Text", "Product Sans",
+    var(--font-jakarta), var(--font-plex-thai),
+    ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    "DB Heavent", "DB HeaventW",
+    "Google Sans", "Product Sans",
+    var(--font-jakarta), var(--font-plex-thai),
+    ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xxl: 2rem;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-slow: marquee 70s linear infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-float-slow: float 14s ease-in-out infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-grid-rise: grid-rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-24px) rotate(3deg); }
+}
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes grid-rise {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+:root {
+  --background: #fff8ef;
+  --foreground: #0b1f38;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * DB Heavent has a smaller x-height than most sans-serifs. Avoid using
+ * `font-size-adjust` to size it up — that scales the underlying font so
+ * Thai tone marks and upper vowels end up floating high above the base
+ * letters. Instead keep the font at its declared size and lean on slightly
+ * tighter leading and spacing typical of Thai display typography.
+ */
+.font-display {
+  font-family: var(--font-display);
+  /* Thai diacritics rely on OpenType GPOS mark positioning; letter-spacing
+     disables GPOS in most browsers, which makes ไม้เอก / ไม้โท / การันต์
+     float well above the base letters. Keep letter-spacing at 0 for DB
+     Heavent and let the font's own metrics place the marks. */
+  letter-spacing: 0;
+  font-feature-settings: "kern" 1, "mark" 1, "mkmk" 1, "ccmp" 1, "locl" 1;
+  line-height: 0.9;
+}
+
+/* Buttons and primary navigation use the display face site-wide. */
+header nav a,
+.btn-display,
+button.font-display,
+a.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  font-feature-settings: "kern" 1, "mark" 1, "mkmk" 1, "ccmp" 1, "locl" 1;
+}
+
+::selection {
+  background: #e87a26;
+  color: #fff;
+}
+
+/* reusable design primitives */
+
+.brand-gradient {
+  background: linear-gradient(
+    92deg,
+    #ff5a8a 0%,
+    #e87a26 22%,
+    #f9e24a 44%,
+    #b2ea3a 60%,
+    #3ed0e6 76%,
+    #8a5cff 100%
+  );
+}
+
+.brand-gradient-text {
+  background: linear-gradient(
+    92deg,
+    #ff5a8a 0%,
+    #e87a26 22%,
+    #f9e24a 44%,
+    #b2ea3a 60%,
+    #3ed0e6 76%,
+    #8a5cff 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+.dot-grid {
+  background-image: radial-gradient(
+    rgba(11, 31, 56, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.dot-grid-light {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.8'/></svg>");
+}
+
+.mask-radial {
+  -webkit-mask-image: radial-gradient(ellipse at center, black 45%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 45%, transparent 75%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.ring-brand {
+  box-shadow: 0 0 0 1px rgba(232, 122, 38, 0.4), 0 0 0 6px rgba(232, 122, 38, 0.12);
+}
