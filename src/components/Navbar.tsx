@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const links = [
-  { href: "#about", label: "เกี่ยวกับสมาคม" },
-  { href: "#pillars", label: "พันธกิจ" },
-  { href: "#events", label: "กิจกรรม" },
-  { href: "#news", label: "ข่าวสาร" },
-  { href: "#partners", label: "เครือข่าย" },
+  { href: "/about", label: "เกี่ยวกับสมาคม" },
+  { href: "/#pillars", label: "พันธกิจ" },
+  { href: "/#events", label: "กิจกรรม" },
+  { href: "/news", label: "ข่าวสาร" },
+  { href: "/#partners", label: "เครือข่าย" },
 ];
 
 export function Navbar() {
@@ -48,7 +48,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#join"
+            href="/register"
             className="font-display hidden rounded-full bg-navy-600 px-6 py-3 text-lg font-semibold text-cream shadow-sm transition-all hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-lg md:inline-flex"
           >
             สมัครสมาชิก
@@ -99,7 +99,7 @@ export function Navbar() {
             </a>
           ))}
           <a
-            href="#join"
+            href="/register"
             onClick={() => setOpen(false)}
             className="font-display mt-2 block rounded-2xl bg-navy-600 px-4 py-3 text-center text-lg font-semibold text-cream"
           >

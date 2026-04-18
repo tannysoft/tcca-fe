@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const featured = {
   tag: "แถลงการณ์",
   date: "27 เม.ย. 2569",
@@ -7,6 +9,7 @@ const featured = {
   excerpt:
     "สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทยเปิดตัวอย่างเป็นทางการ ณ SCBX Next Tech พร้อมเวทีเสวนาพิเศษโดยผู้นำอุตสาหกรรม",
   author: "Newsroom",
+  cover: "/news/press-conference.jpg",
 };
 
 const insight = {
@@ -17,6 +20,7 @@ const insight = {
   subtitle: "โตอย่างไร · โตไปทางไหน",
   excerpt:
     "ข้อมูลเชิงลึกแรกของ TCCA พร้อมตัวเลขสำคัญที่แบรนด์และครีเอเตอร์ต้องรู้",
+  cover: "/news/agenda.jpg",
 };
 
 const community = {
@@ -26,6 +30,7 @@ const community = {
   highlight: "1,000 คนแรก",
   excerpt:
     "Workshop ฟรีตลอดปีแรก เครือข่ายพาร์ทเนอร์ และสิทธิพิเศษอีกมากมาย",
+  cover: "/news/press-conference.jpg",
 };
 
 export function News() {
@@ -44,7 +49,7 @@ export function News() {
             </h2>
           </div>
           <a
-            href="#"
+            href="/news"
             className="font-display group inline-flex h-12 items-center gap-2 rounded-full border border-navy-600/15 bg-white/60 px-5 text-base font-semibold text-navy-700 backdrop-blur transition hover:border-navy-600/40 hover:bg-white"
           >
             ดูทั้งหมด
@@ -70,90 +75,92 @@ export function News() {
 
 function FeaturedCard({ data }: { data: typeof featured }) {
   return (
-    <article className="group relative col-span-1 row-span-2 overflow-hidden rounded-[2rem] bg-navy-700 text-cream shadow-xl md:col-span-2">
-      {/* ambient fx */}
-      <div aria-hidden className="absolute inset-0 dot-grid-light opacity-30" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-32 -top-32 h-80 w-80 rounded-full bg-orange-tcca/25 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-40 -bottom-40 h-[500px] w-[500px] rounded-full brand-gradient opacity-20 blur-3xl"
-      />
-
-      {/* diagonal gradient ribbon */}
-      <svg
-        aria-hidden
-        viewBox="0 0 400 400"
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-50"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <linearGradient id="newsRib" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ff5a8a" />
-            <stop offset="50%" stopColor="#e87a26" />
-            <stop offset="100%" stopColor="#3ed0e6" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M-20 280 C 120 240, 220 360, 420 300"
-          stroke="url(#newsRib)"
-          strokeWidth="2"
-          fill="none"
-          opacity="0.6"
+    <Link
+      href="/detail"
+      className="group relative col-span-1 row-span-2 grid overflow-hidden rounded-[2rem] bg-navy-700 text-cream shadow-xl md:col-span-2 md:grid-cols-[1fr_1.1fr]"
+    >
+      {/* ========== COVER side ========== */}
+      <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={data.cover}
+          alt={data.title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
-        <path
-          d="M-20 320 C 140 280, 260 400, 420 340"
-          stroke="url(#newsRib)"
-          strokeWidth="1"
-          fill="none"
-          opacity="0.4"
+        {/* bottom-up fade on mobile for legibility when stacked */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-navy-700/90 via-navy-700/10 to-transparent md:hidden"
         />
-      </svg>
+        {/* inner edge fade on desktop */}
+        <div
+          aria-hidden
+          className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-r from-transparent to-navy-700 md:block"
+        />
 
-      {/* floating decorative mark */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-6 top-10 rotate-[12deg] font-display text-[180px] font-bold leading-none text-cream/5 md:text-[260px]"
-      >
-        tcca
+        {/* floating tag */}
+        <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-lg">
+          <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+          Featured · {data.tag}
+        </span>
       </div>
 
-      <div className="relative flex h-full flex-col p-8 md:p-12">
-        {/* top row: tag + read time */}
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-            Featured · {data.tag}
-          </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
-            {data.readMinutes} min read
-          </span>
+      {/* ========== CONTENT side ========== */}
+      <div className="relative flex flex-col p-7 md:p-10">
+        {/* ambient fx on content side */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 dot-grid-light opacity-20"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-tcca/25 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-20 -bottom-20 h-80 w-80 rounded-full brand-gradient opacity-20 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-4 -top-10 rotate-[12deg] font-display text-[180px] font-bold leading-none text-cream/5"
+        >
+          tcca
         </div>
 
-        {/* title block — pushed toward middle-bottom */}
-        <div className="mt-auto pt-16">
-          <h3 className="font-display text-3xl font-bold !leading-[1.05] text-cream md:text-5xl">
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
+              {data.date}
+            </span>
+            <span aria-hidden className="h-px flex-1 bg-cream/15" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
+              {data.readMinutes} min read
+            </span>
+          </div>
+
+          <h3 className="mt-6 font-display text-3xl font-bold !leading-[1.05] text-cream md:text-[44px]">
             {data.title}
           </h3>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-cream/75 md:text-base">
+          <p className="mt-5 text-sm leading-relaxed text-cream/80 md:text-base">
             {data.excerpt}
           </p>
         </div>
 
-        {/* bottom meta */}
-        <footer className="mt-8 flex items-center justify-between border-t border-cream/15 pt-5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full brand-gradient text-xs font-bold text-white">
+        <footer className="relative mt-auto flex items-center justify-between gap-4 border-t border-cream/15 pt-6">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full brand-gradient text-xs font-bold text-white shadow-md">
               T
             </span>
-            <div className="text-sm">
-              <p className="font-semibold text-cream">{data.author}</p>
-              <p className="text-cream/60">{data.date}</p>
+            <div className="min-w-0 text-sm">
+              <p className="truncate font-semibold text-cream">
+                {data.author}
+              </p>
+              <p className="truncate text-xs text-cream/60">
+                TCCA Official
+              </p>
             </div>
           </div>
-          <span className="font-display inline-flex h-11 items-center gap-2 rounded-full bg-cream px-5 text-sm font-semibold text-navy-700 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+          <span className="font-display inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-cream px-5 text-sm font-semibold text-navy-700 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg">
             อ่านเต็ม
             <span
               aria-hidden
@@ -164,7 +171,7 @@ function FeaturedCard({ data }: { data: typeof featured }) {
           </span>
         </footer>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -174,75 +181,71 @@ function FeaturedCard({ data }: { data: typeof featured }) {
 
 function InsightCard({ data }: { data: typeof insight }) {
   return (
-    <article className="group relative overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-navy-600/10 transition-all hover:-translate-y-1 hover:shadow-lg hover:ring-orange-tcca/40">
-      {/* mini-chart decoration */}
-      <svg
-        aria-hidden
-        viewBox="0 0 200 80"
-        className="absolute inset-x-0 bottom-0 h-24 w-full"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="insightFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#e87a26" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#e87a26" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M0 60 L20 50 L40 55 L60 35 L80 40 L100 20 L120 30 L140 15 L160 22 L180 10 L200 15 L200 80 L0 80 Z"
-          fill="url(#insightFill)"
+    <Link
+      href="/detail"
+      className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-navy-600/10 transition-all hover:-translate-y-1 hover:shadow-lg hover:ring-orange-tcca/40"
+    >
+      {/* cover */}
+      <div className="relative h-32 overflow-hidden md:h-36">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={data.cover}
+          alt={data.title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
-        <path
-          d="M0 60 L20 50 L40 55 L60 35 L80 40 L100 20 L120 30 L140 15 L160 22 L180 10 L200 15"
-          fill="none"
-          stroke="#e87a26"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+        <span className="absolute left-4 top-4 inline-flex rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream shadow-md">
+          {data.tag}
+        </span>
+        <span
+          className="absolute bottom-2 right-4 font-display text-4xl font-bold !leading-none tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] md:text-5xl"
+          aria-label={data.bigNumber}
+        >
+          <span className="brand-gradient-text">{data.bigNumber}</span>
+        </span>
+      </div>
 
-      <div className="relative flex h-full flex-col p-7">
-        <div className="flex items-start justify-between">
-          <span className="inline-flex rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream">
-            {data.tag}
-          </span>
-          <svg
-            aria-hidden
-            viewBox="0 0 24 24"
+      {/* mini-chart decoration on content area */}
+      <div className="relative flex flex-1 flex-col p-7 pt-5">
+        <svg
+          aria-hidden
+          viewBox="0 0 200 80"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 w-full"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="insightFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#e87a26" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#e87a26" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0 60 L20 50 L40 55 L60 35 L80 40 L100 20 L120 30 L140 15 L160 22 L180 10 L200 15 L200 80 L0 80 Z"
+            fill="url(#insightFill)"
+          />
+          <path
+            d="M0 60 L20 50 L40 55 L60 35 L80 40 L100 20 L120 30 L140 15 L160 22 L180 10 L200 15"
             fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
+            stroke="#e87a26"
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-5 w-5 text-orange-tcca"
-          >
-            <path d="M3 17 L 9 11 L 13 14 L 21 6" />
-            <path d="M15 6 L 21 6 L 21 12" />
-          </svg>
+          />
+        </svg>
+
+        <div className="relative">
+          <h3 className="font-display text-xl font-bold !leading-[1.1] text-navy-700">
+            {data.title}
+          </h3>
+          <p className="mt-1 text-sm font-medium text-orange-tcca">
+            {data.subtitle}
+          </p>
+
+          <p className="mt-4 text-xs leading-relaxed text-navy-600/70">
+            {data.excerpt}
+          </p>
         </div>
 
-        <div className="mt-4">
-          <span
-            className="font-display text-6xl font-bold leading-none tracking-tight text-navy-700 md:text-7xl"
-            aria-label={data.bigNumber}
-          >
-            <span className="brand-gradient-text">{data.bigNumber}</span>
-          </span>
-        </div>
-
-        <h3 className="mt-3 font-display text-xl font-bold !leading-[1.1] text-navy-700">
-          {data.title}
-        </h3>
-        <p className="mt-1 text-sm font-medium text-orange-tcca">
-          {data.subtitle}
-        </p>
-
-        <p className="mt-4 text-xs leading-relaxed text-navy-600/70">
-          {data.excerpt}
-        </p>
-
-        <div className="mt-auto flex items-center justify-between pt-6 text-xs font-semibold">
+        <div className="relative mt-auto flex items-center justify-between pt-6 text-xs font-semibold">
           <span className="text-navy-600/60">{data.date}</span>
           <span className="font-display inline-flex items-center gap-1 text-navy-700 transition-transform group-hover:translate-x-0.5">
             ดูรายงาน
@@ -250,7 +253,7 @@ function InsightCard({ data }: { data: typeof insight }) {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -260,43 +263,45 @@ function InsightCard({ data }: { data: typeof insight }) {
 
 function CommunityCard({ data }: { data: typeof community }) {
   return (
-    <article className="group relative isolate overflow-hidden rounded-[2rem] bg-orange-tcca text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl">
-      {/* sticker-style diagonal stripes */}
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-15"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,0.8) 14px 15px)",
-        }}
-      />
-      {/* speech bubble tail */}
-      <svg
-        aria-hidden
-        viewBox="0 0 60 60"
-        className="absolute -bottom-1 left-10 h-8 w-8 text-orange-tcca"
-        fill="currentColor"
-      >
-        <polygon points="20,0 40,0 30,30" />
-      </svg>
-
-      {/* floating star */}
-      <svg
-        aria-hidden
-        viewBox="0 0 24 24"
-        fill="#fff"
-        className="absolute right-6 top-6 h-5 w-5 animate-float-slow"
-      >
-        <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" />
-      </svg>
-
-      <div className="relative flex h-full flex-col p-7">
-        <span className="inline-flex w-fit rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-white backdrop-blur">
+    <Link
+      href="/detail"
+      className="group relative isolate flex flex-col overflow-hidden rounded-[2rem] bg-orange-tcca text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl"
+    >
+      {/* cover */}
+      <div className="relative h-44 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={data.cover}
+          alt={data.title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+        />
+        {/* tag + star */}
+        <span className="absolute left-4 top-4 inline-flex w-fit rounded-full bg-orange-tcca px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-white shadow-md">
           {data.tag}
         </span>
+        <svg
+          aria-hidden
+          viewBox="0 0 24 24"
+          fill="#fff"
+          className="absolute right-5 top-5 h-5 w-5 animate-float-slow drop-shadow"
+        >
+          <path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" />
+        </svg>
+      </div>
 
-        <div className="mt-5">
-          <p className="font-display text-[34px] font-bold !leading-[1.05] text-white md:text-[38px]">
+      {/* diagonal stripes on content area only */}
+      <div className="relative flex flex-1 flex-col p-7">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,0.8) 14px 15px)",
+          }}
+        />
+
+        <div className="relative">
+          <p className="font-display text-[30px] font-bold !leading-[1.05] text-white md:text-[34px]">
             {data.title}
             <br />
             <span className="relative inline-block">
@@ -307,14 +312,14 @@ function CommunityCard({ data }: { data: typeof community }) {
               />
             </span>
           </p>
+
+          <p className="mt-4 text-xs leading-relaxed text-white/90">
+            {data.excerpt}
+          </p>
         </div>
 
-        <p className="mt-4 text-xs leading-relaxed text-white/90">
-          {data.excerpt}
-        </p>
-
-        <div className="mt-auto flex items-center justify-between pt-6">
-          <span className="text-[11px] font-semibold text-white/70">
+        <div className="relative mt-auto flex items-center justify-between pt-6">
+          <span className="text-[11px] font-semibold text-white/75">
             {data.date}
           </span>
           <span
@@ -325,6 +330,6 @@ function CommunityCard({ data }: { data: typeof community }) {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
