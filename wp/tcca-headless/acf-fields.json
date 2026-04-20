@@ -1,0 +1,418 @@
+[
+  {
+    "key": "group_tcca_identity",
+    "title": "Site Identity & Contact",
+    "fields": [
+      { "key": "field_tcca_logo",        "label": "Logo (default)",    "name": "logo",         "type": "image", "return_format": "array", "preview_size": "medium", "library": "all" },
+      { "key": "field_tcca_logo_white",  "label": "Logo (white)",      "name": "logo_white",   "type": "image", "return_format": "array", "preview_size": "medium", "library": "all" },
+      { "key": "field_tcca_site_name",   "label": "Site name",         "name": "site_name",    "type": "text",  "default_value": "Thailand Content Creator Associaton" },
+      { "key": "field_tcca_tagline",     "label": "Tagline",           "name": "tagline",      "type": "text" },
+      { "key": "field_tcca_description", "label": "Description",       "name": "description",  "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_contact_email", "label": "Contact email",   "name": "contact_email","type": "email", "default_value": "contact@tcca.or.th" },
+      { "key": "field_tcca_contact_addr",   "label": "Contact address","name": "contact_address","type": "textarea", "rows": 3 },
+      { "key": "field_tcca_favicon",        "label": "Favicon",           "name": "favicon",      "type": "image", "return_format": "array", "preview_size": "thumbnail", "mime_types": "png,ico,svg" },
+      { "key": "field_tcca_og_default",     "label": "Default OG image (1200x630)", "name": "default_og_image", "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_brand_avatar",   "label": "Brand avatar (gradient circle)","name": "brand_avatar","type": "image", "return_format": "array", "preview_size": "thumbnail", "instructions": "ใช้ในกล่อง JoinCTA / Events" },
+      {
+        "key": "field_tcca_brand_assets", "label": "Brand kit / ดาวน์โหลด", "name": "brand_assets", "type": "repeater", "layout": "table", "button_label": "เพิ่มไฟล์",
+        "sub_fields": [
+          { "key": "field_tcca_asset_label", "label": "Label",       "name": "label",       "type": "text" },
+          { "key": "field_tcca_asset_file",  "label": "File",        "name": "file",        "type": "file", "return_format": "array" },
+          { "key": "field_tcca_asset_desc",  "label": "Description", "name": "description", "type": "text" }
+        ]
+      },
+      {
+        "key": "field_tcca_socials", "label": "Social channels", "name": "socials", "type": "repeater",
+        "button_label": "เพิ่มช่องทาง", "layout": "table",
+        "sub_fields": [
+          { "key": "field_tcca_social_platform", "label": "Platform", "name": "platform", "type": "select", "choices": { "facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok", "youtube": "YouTube", "x": "X (Twitter)", "line": "LINE", "linkedin": "LinkedIn" }, "return_format": "value" },
+          { "key": "field_tcca_social_label",    "label": "Label",    "name": "label",    "type": "text" },
+          { "key": "field_tcca_social_url",      "label": "URL",      "name": "url",      "type": "url" }
+        ]
+      }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "tcca-identity" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "identity"
+  },
+
+  {
+    "key": "group_tcca_navigation",
+    "title": "Navigation",
+    "fields": [
+      {
+        "key": "field_tcca_nav_items", "label": "Primary menu", "name": "primary_menu", "type": "repeater", "button_label": "เพิ่มรายการ", "layout": "table",
+        "sub_fields": [
+          { "key": "field_tcca_nav_label", "label": "Label", "name": "label", "type": "text" },
+          { "key": "field_tcca_nav_href",  "label": "Link",  "name": "href",  "type": "text", "instructions": "เช่น /about หรือ #events" }
+        ]
+      },
+      { "key": "field_tcca_nav_cta_label", "label": "CTA label", "name": "cta_label", "type": "text", "default_value": "สมัครสมาชิก" },
+      { "key": "field_tcca_nav_cta_href",  "label": "CTA link",  "name": "cta_href",  "type": "text", "default_value": "/register" }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "tcca-navigation" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "navigation"
+  },
+
+  {
+    "key": "group_tcca_footer",
+    "title": "Footer",
+    "fields": [
+      { "key": "field_tcca_footer_desc", "label": "Footer description", "name": "description", "type": "textarea", "rows": 4 },
+      {
+        "key": "field_tcca_footer_cols", "label": "Columns", "name": "columns", "type": "repeater", "button_label": "เพิ่มคอลัมน์", "layout": "row",
+        "sub_fields": [
+          { "key": "field_tcca_footer_col_title", "label": "Title", "name": "title", "type": "text" },
+          {
+            "key": "field_tcca_footer_col_items", "label": "Items", "name": "items", "type": "repeater", "layout": "table", "button_label": "เพิ่มลิงก์",
+            "sub_fields": [
+              { "key": "field_tcca_footer_item_label", "label": "Label", "name": "label", "type": "text" },
+              { "key": "field_tcca_footer_item_href",  "label": "Link",  "name": "href",  "type": "text" }
+            ]
+          }
+        ]
+      },
+      { "key": "field_tcca_footer_copyright", "label": "Copyright text (ซ้าย)", "name": "copyright", "type": "text", "default_value": "© {year} Thailand Content Creator Associaton. All rights reserved." },
+      { "key": "field_tcca_footer_tagline",   "label": "Footer tagline (ขวา)",  "name": "tagline",   "type": "text" }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "tcca-footer" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "footer"
+  },
+
+  {
+    "key": "group_tcca_home",
+    "title": "Home Page",
+    "fields": [
+      { "key": "field_tcca_home_tab_hero", "label": "Hero", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_hero_line1",      "label": "Hero line 1",           "name": "hero_line1",      "type": "text", "default_value": "บ้านของ" },
+      { "key": "field_tcca_hero_highlight",  "label": "Hero highlighted word", "name": "hero_highlight",  "type": "text", "default_value": "คอนเทนต์ครีเอเตอร์" },
+      { "key": "field_tcca_hero_line2",      "label": "Hero line 2",           "name": "hero_line2",      "type": "text", "default_value": "ของประเทศไทย" },
+      { "key": "field_tcca_hero_desc",       "label": "Hero description",      "name": "hero_description","type": "wysiwyg", "toolbar": "basic", "media_upload": 0, "tabs": "visual" },
+      { "key": "field_tcca_hero_cta1_label", "label": "Primary CTA · label",   "name": "primary_cta_label", "type": "text", "default_value": "ร่วมเป็นสมาชิก" },
+      { "key": "field_tcca_hero_cta1_href",  "label": "Primary CTA · link",    "name": "primary_cta_href",  "type": "text", "default_value": "/register" },
+      { "key": "field_tcca_hero_cta2_label", "label": "Secondary CTA · label", "name": "secondary_cta_label", "type": "text", "default_value": "รู้จักเรามากขึ้น" },
+      { "key": "field_tcca_hero_cta2_href",  "label": "Secondary CTA · link",  "name": "secondary_cta_href",  "type": "text", "default_value": "/about" },
+      { "key": "field_tcca_hero_visual",     "label": "Hero visual (ภาพขวา — optional)", "name": "hero_visual",    "type": "image", "return_format": "array", "preview_size": "medium", "instructions": "ถ้าเว้นว่างจะใช้ <HeroVisual /> component เดิม" },
+      { "key": "field_tcca_hero_og",         "label": "OG image (override หน้าแรก)",      "name": "og_image",        "type": "image", "return_format": "array", "preview_size": "medium" },
+      {
+        "key": "field_tcca_hero_marquee", "label": "Marquee words", "name": "marquee_words", "type": "repeater", "layout": "table", "button_label": "เพิ่มคำ",
+        "sub_fields": [{ "key": "field_tcca_hero_marquee_word", "label": "Word", "name": "word", "type": "text" }]
+      },
+
+      { "key": "field_tcca_home_tab_about", "label": "About section", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_about_eyebrow",    "label": "Eyebrow",            "name": "about_eyebrow",    "type": "text", "default_value": "About TCCA" },
+      { "key": "field_tcca_about_title",      "label": "Title (HTML ได้)",    "name": "about_title",      "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_about_desc",       "label": "Description",        "name": "about_description","type": "textarea", "rows": 5 },
+      { "key": "field_tcca_about_quote",      "label": "Pull quote",          "name": "about_quote",      "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_about_quote_cap",  "label": "Quote caption",       "name": "about_quote_caption","type": "text", "default_value": "TCCA Manifesto" },
+      {
+        "key": "field_tcca_about_cards", "label": "Feature cards", "name": "about_cards", "type": "repeater", "layout": "block", "button_label": "เพิ่มการ์ด",
+        "sub_fields": [
+          { "key": "field_tcca_about_card_tone",   "label": "Tone",   "name": "tone",   "type": "select", "choices": { "navy": "Navy", "orange": "Orange", "cream": "Cream", "gradient": "Gradient" }, "return_format": "value" },
+          { "key": "field_tcca_about_card_kicker", "label": "Kicker", "name": "kicker", "type": "text" },
+          { "key": "field_tcca_about_card_title",  "label": "Title",  "name": "title",  "type": "text" },
+          { "key": "field_tcca_about_card_body",   "label": "Body",   "name": "body",   "type": "textarea", "rows": 3 },
+          { "key": "field_tcca_about_card_icon",   "label": "Icon",   "name": "icon",   "type": "select", "choices": { "eye": "Eye", "target": "Target", "people": "People", "infinity": "Infinity" }, "return_format": "value" },
+          { "key": "field_tcca_about_card_span",   "label": "Span 2 columns", "name": "span_two", "type": "true_false", "ui": 1 }
+        ]
+      },
+
+      { "key": "field_tcca_home_tab_pillars", "label": "Pillars section", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_pillars_eyebrow",  "label": "Eyebrow",  "name": "pillars_eyebrow",  "type": "text", "default_value": "Our Pillars" },
+      { "key": "field_tcca_pillars_title",    "label": "Title",    "name": "pillars_title",    "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_pillars_subtitle", "label": "Subtitle", "name": "pillars_subtitle", "type": "textarea", "rows": 3 },
+
+      { "key": "field_tcca_home_tab_events", "label": "Events section", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_events_eyebrow", "label": "Eyebrow", "name": "events_eyebrow", "type": "text", "default_value": "Events & Agenda" },
+      { "key": "field_tcca_events_title",   "label": "Title",   "name": "events_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_events_featured","label": "Featured event", "name": "featured_event", "type": "post_object", "post_type": ["tcca_event"], "allow_null": 1, "return_format": "object", "ui": 1 },
+      { "key": "field_tcca_events_upcoming","label": "Upcoming events", "name": "upcoming_events", "type": "relationship", "post_type": ["tcca_event"], "filters": ["search"], "return_format": "object", "min": 0, "max": 6 },
+
+      { "key": "field_tcca_home_tab_news", "label": "News section", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_news_eyebrow", "label": "Eyebrow", "name": "news_eyebrow", "type": "text", "default_value": "Newsroom" },
+      { "key": "field_tcca_news_title",   "label": "Title",   "name": "news_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_news_featured","label": "Featured article",  "name": "featured_article",  "type": "post_object", "post_type": ["post"], "allow_null": 1, "return_format": "object", "ui": 1 },
+      { "key": "field_tcca_news_insight", "label": "Insight card",       "name": "insight_article",   "type": "post_object", "post_type": ["post"], "allow_null": 1, "return_format": "object", "ui": 1 },
+      { "key": "field_tcca_news_community","label": "Community card",    "name": "community_article", "type": "post_object", "post_type": ["post"], "allow_null": 1, "return_format": "object", "ui": 1 },
+      { "key": "field_tcca_insight_bignum","label": "Insight · big number","name": "insight_big_number","type": "text" },
+      { "key": "field_tcca_insight_sub",   "label": "Insight · subtitle", "name": "insight_subtitle", "type": "text" },
+      { "key": "field_tcca_comm_highlight","label": "Community · highlight","name": "community_highlight","type": "text" },
+
+      { "key": "field_tcca_home_tab_join", "label": "Join CTA", "name": "", "type": "tab", "placement": "top" },
+      { "key": "field_tcca_join_eyebrow", "label": "Eyebrow", "name": "join_eyebrow", "type": "text", "default_value": "Membership · Founding Class" },
+      { "key": "field_tcca_join_title",   "label": "Title",   "name": "join_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_join_desc",    "label": "Description","name": "join_description","type": "textarea", "rows": 4 },
+      { "key": "field_tcca_join_cta1_label","label": "Primary CTA label",  "name": "primary_cta_label",  "type": "text", "default_value": "สมัครสมาชิกตอนนี้" },
+      { "key": "field_tcca_join_cta1_href", "label": "Primary CTA link",   "name": "primary_cta_href",   "type": "text", "default_value": "/register" },
+      { "key": "field_tcca_join_cta2_label","label": "Secondary CTA label","name": "secondary_cta_label","type": "text", "default_value": "ติดต่อสมาคม" },
+      { "key": "field_tcca_join_cta2_href", "label": "Secondary CTA link", "name": "secondary_cta_href", "type": "text" },
+      {
+        "key": "field_tcca_join_benefits", "label": "Benefit bullets", "name": "benefits", "type": "repeater", "layout": "table", "button_label": "เพิ่ม",
+        "sub_fields": [{ "key": "field_tcca_join_benefit_text", "label": "Text", "name": "text", "type": "text" }]
+      },
+      { "key": "field_tcca_join_note_title", "label": "Note · title", "name": "note_title", "type": "text", "default_value": "ฟรีค่าสมัคร ตลอดปีแรก" },
+      { "key": "field_tcca_join_note_body",  "label": "Note · body",  "name": "note_body",  "type": "text" },
+      { "key": "field_tcca_join_avatar",     "label": "Avatar image (กล่องสิทธิประโยชน์)", "name": "benefits_avatar", "type": "image", "return_format": "array", "preview_size": "thumbnail" }
+    ],
+    "location": [[{ "param": "page_template", "operator": "==", "value": "page-home.php" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "home"
+  },
+
+  {
+    "key": "group_tcca_about_page",
+    "title": "About Page",
+    "fields": [
+      { "key": "field_tcca_abt_tab_hero", "label": "Hero", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_abt_eyebrow",  "label": "Eyebrow",      "name": "hero_eyebrow",     "type": "text", "default_value": "About us" },
+      { "key": "field_tcca_abt_title",    "label": "Title",        "name": "hero_title",       "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_abt_desc",     "label": "Description",  "name": "hero_description", "type": "textarea", "rows": 4 },
+      { "key": "field_tcca_abt_ns_eye",   "label": "North Star · eyebrow", "name": "north_star_eyebrow", "type": "text", "default_value": "Our North Star" },
+      { "key": "field_tcca_abt_ns_title", "label": "North Star · title",   "name": "north_star_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_abt_ns_cap",   "label": "North Star · caption", "name": "north_star_caption", "type": "text" },
+      { "key": "field_tcca_abt_og",       "label": "OG image",             "name": "og_image",           "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_abt_hero_img", "label": "Hero accent image (optional)", "name": "hero_accent_image", "type": "image", "return_format": "array", "preview_size": "medium" },
+
+      { "key": "field_tcca_abt_tab_story", "label": "Story", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_story_eyebrow","label": "Eyebrow", "name": "story_eyebrow", "type": "text", "default_value": "Our Story" },
+      { "key": "field_tcca_story_title",  "label": "Title",   "name": "story_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_story_body",   "label": "Body",    "name": "story_body",    "type": "wysiwyg", "toolbar": "full",  "media_upload": 1 },
+      { "key": "field_tcca_story_image",  "label": "Story image (optional)", "name": "story_image", "type": "image", "return_format": "array", "preview_size": "medium" },
+
+      { "key": "field_tcca_abt_tab_values", "label": "Values", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_values_eyebrow", "label": "Eyebrow", "name": "values_eyebrow", "type": "text", "default_value": "Our Values" },
+      { "key": "field_tcca_values_title",   "label": "Title",   "name": "values_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      {
+        "key": "field_tcca_values_items", "label": "Values", "name": "values", "type": "repeater", "layout": "block", "button_label": "เพิ่ม Value",
+        "sub_fields": [
+          { "key": "field_tcca_val_n",     "label": "Number", "name": "number", "type": "text" },
+          { "key": "field_tcca_val_title", "label": "Title",  "name": "title",  "type": "text" },
+          { "key": "field_tcca_val_body",  "label": "Body",   "name": "body",   "type": "textarea", "rows": 3 },
+          { "key": "field_tcca_val_tone",  "label": "Tone",   "name": "tone",   "type": "select", "choices": { "navy": "Navy", "orange": "Orange", "cream": "Cream", "gradient": "Gradient" } }
+        ]
+      },
+
+      { "key": "field_tcca_abt_tab_timeline", "label": "Timeline", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_tl_eyebrow", "label": "Eyebrow", "name": "timeline_eyebrow", "type": "text", "default_value": "Journey" },
+      { "key": "field_tcca_tl_title",   "label": "Title",   "name": "timeline_title",   "type": "text", "default_value": "เส้นทางของเรา" },
+      { "key": "field_tcca_tl_entries", "label": "Timeline entries", "name": "timeline_entries", "type": "relationship", "post_type": ["tcca_timeline"], "filters": ["search"], "return_format": "object", "min": 0 },
+
+      { "key": "field_tcca_abt_tab_committee", "label": "Committee", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_com_eyebrow", "label": "Eyebrow", "name": "committee_eyebrow", "type": "text", "default_value": "Committee" },
+      { "key": "field_tcca_com_title",   "label": "Title",   "name": "committee_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_com_desc",    "label": "Description", "name": "committee_description", "type": "textarea", "rows": 4 },
+      { "key": "field_tcca_com_groups",  "label": "Committee groups", "name": "committee_groups", "type": "relationship", "post_type": ["tcca_committee"], "filters": ["search"], "return_format": "object" },
+
+      { "key": "field_tcca_abt_tab_final", "label": "Final CTA", "type": "tab", "name": "", "placement": "top" },
+      { "key": "field_tcca_fin_eyebrow", "label": "Eyebrow", "name": "final_cta_eyebrow", "type": "text", "default_value": "Join us" },
+      { "key": "field_tcca_fin_title",   "label": "Title",   "name": "final_cta_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_fin_desc",    "label": "Description", "name": "final_cta_description", "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_fin_label",   "label": "CTA label", "name": "final_cta_label", "type": "text", "default_value": "สมัครสมาชิก" },
+      { "key": "field_tcca_fin_href",    "label": "CTA link",  "name": "final_cta_href",  "type": "text", "default_value": "/register" }
+    ],
+    "location": [[{ "param": "page_template", "operator": "==", "value": "page-about.php" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "aboutPage"
+  },
+
+  {
+    "key": "group_tcca_register_page",
+    "title": "Register Page",
+    "fields": [
+      { "key": "field_tcca_reg_eyebrow",  "label": "Hero eyebrow",     "name": "hero_eyebrow",     "type": "text", "default_value": "Membership" },
+      { "key": "field_tcca_reg_title",    "label": "Hero title",       "name": "hero_title",       "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_reg_desc",     "label": "Hero description", "name": "hero_description", "type": "textarea", "rows": 4 },
+      { "key": "field_tcca_reg_og",       "label": "OG image",         "name": "og_image",         "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_reg_hero_img", "label": "Hero accent image (optional)", "name": "hero_accent_image", "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_reg_price",    "label": "Price badge",      "name": "price_badge",      "type": "text", "default_value": "ฟรี" },
+      { "key": "field_tcca_reg_price_note","label": "Price note",      "name": "price_note",       "type": "text", "default_value": "ไม่มีค่าธรรมเนียม · ไม่มีรายปี" },
+
+      { "key": "field_tcca_reg_ben_eye",   "label": "Benefits eyebrow", "name": "benefits_eyebrow", "type": "text", "default_value": "Benefits" },
+      { "key": "field_tcca_reg_ben_title", "label": "Benefits title",   "name": "benefits_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_reg_ben_sub",   "label": "Benefits subtitle","name": "benefits_subtitle","type": "textarea", "rows": 2 },
+      { "key": "field_tcca_reg_ben_list",  "label": "Benefits (เลือกจาก Benefits CPT)", "name": "benefits_list", "type": "relationship", "post_type": ["tcca_benefit"], "filters": ["search"], "return_format": "object" },
+
+      { "key": "field_tcca_reg_form_eye",  "label": "Form eyebrow", "name": "form_eyebrow", "type": "text", "default_value": "Application" },
+      { "key": "field_tcca_reg_form_title","label": "Form title",   "name": "form_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      {
+        "key": "field_tcca_reg_form_channels", "label": "Channel options", "name": "channel_options", "type": "repeater", "layout": "table", "button_label": "เพิ่มช่อง",
+        "sub_fields": [{ "key": "field_tcca_reg_form_channel_label", "label": "Label", "name": "label", "type": "text" }]
+      },
+      { "key": "field_tcca_reg_form_submit","label": "Submit button label","name": "submit_label","type": "text", "default_value": "ส่งใบสมัคร" },
+      { "key": "field_tcca_reg_form_terms", "label": "Terms text (HTML)",  "name": "terms_html",  "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+
+      {
+        "key": "field_tcca_reg_steps", "label": "Steps", "name": "steps", "type": "repeater", "layout": "block", "button_label": "เพิ่มขั้นตอน",
+        "sub_fields": [
+          { "key": "field_tcca_step_n",     "label": "Number", "name": "number", "type": "text" },
+          { "key": "field_tcca_step_title", "label": "Title",  "name": "title",  "type": "text" },
+          { "key": "field_tcca_step_body",  "label": "Body",   "name": "body",   "type": "textarea", "rows": 3 }
+        ]
+      },
+
+      { "key": "field_tcca_reg_fee_title", "label": "Fee note · title", "name": "fee_note_title", "type": "text", "default_value": "สมัครฟรี ไม่มีเงื่อนไข" },
+      { "key": "field_tcca_reg_fee_body",  "label": "Fee note · body",  "name": "fee_note_body",  "type": "textarea", "rows": 3 }
+    ],
+    "location": [[{ "param": "page_template", "operator": "==", "value": "page-register.php" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "registerPage"
+  },
+
+  {
+    "key": "group_tcca_partners_section",
+    "title": "Partners Section",
+    "fields": [
+      { "key": "field_tcca_partners_eyebrow", "label": "Eyebrow", "name": "eyebrow", "type": "text", "default_value": "Partners & Network" },
+      { "key": "field_tcca_partners_title",   "label": "Title",   "name": "title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "tcca-partners" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "partnersSection"
+  },
+
+  {
+    "key": "group_tcca_article_fields",
+    "title": "Article — Extra metadata",
+    "description": "Tag, Cover, Body, Hashtags ใช้ของ WordPress มาตรฐาน (Categories / Featured Image / Gutenberg / Tags). ACF เก็บเฉพาะข้อมูลเสริม.",
+    "fields": [
+      { "key": "field_tcca_art_subtitle",   "label": "Subtitle",               "name": "subtitle",         "type": "text", "instructions": "บรรทัดนำเด่นเหนือเนื้อหา (optional)" },
+      { "key": "field_tcca_art_read",       "label": "Read minutes",           "name": "read_minutes",     "type": "number", "default_value": 3, "min": 1 },
+      { "key": "field_tcca_art_featured",   "label": "Is featured",            "name": "is_featured",      "type": "true_false", "ui": 1, "instructions": "ใช้เป็นบทความเด่นบนหน้าแรก / /detail" },
+      { "key": "field_tcca_art_author_name","label": "Author display name",    "name": "author_display",   "type": "text", "default_value": "Newsroom" },
+      { "key": "field_tcca_art_author_role","label": "Author role",            "name": "author_role",      "type": "text", "default_value": "TCCA Official" },
+      { "key": "field_tcca_art_og",         "label": "OG image (override)",    "name": "og_image",         "type": "image", "return_format": "array", "preview_size": "medium", "instructions": "ถ้าเว้นว่างจะใช้ Featured Image" },
+      {
+        "key": "field_tcca_art_gallery", "label": "Gallery (เพิ่มเติม)", "name": "gallery", "type": "gallery", "return_format": "array", "preview_size": "medium", "insert": "append"
+      },
+      {
+        "key": "field_tcca_art_attach", "label": "Attachments / ดาวน์โหลด", "name": "attachments", "type": "repeater", "layout": "table", "button_label": "เพิ่มไฟล์",
+        "sub_fields": [
+          { "key": "field_tcca_art_attach_label", "label": "Label", "name": "label", "type": "text" },
+          { "key": "field_tcca_art_attach_file",  "label": "File",  "name": "file",  "type": "file", "return_format": "array" }
+        ]
+      },
+
+      {
+        "key": "field_tcca_art_toc", "label": "Table of contents", "name": "toc", "type": "repeater", "layout": "table", "button_label": "เพิ่มหัวข้อ",
+        "instructions": "ถ้าใส่จะแสดง sidebar On this page (ลิงก์ไปที่ HTML Anchor ของ heading block ใน Gutenberg)",
+        "sub_fields": [
+          { "key": "field_tcca_art_toc_id",    "label": "ID (anchor)", "name": "id",    "type": "text", "instructions": "ตรงกับ HTML Anchor ของ heading block" },
+          { "key": "field_tcca_art_toc_label", "label": "Label",       "name": "label", "type": "text" }
+        ]
+      },
+      { "key": "field_tcca_art_related", "label": "Related articles", "name": "related", "type": "relationship", "post_type": ["post"], "filters": ["search"], "return_format": "object", "min": 0, "max": 6 }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "post" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "articleFields"
+  },
+
+  {
+    "key": "group_tcca_event_fields",
+    "title": "Event — Fields",
+    "fields": [
+      { "key": "field_tcca_ev_date",       "label": "Date",         "name": "event_date",      "type": "date_picker", "display_format": "d M Y", "return_format": "Y-m-d" },
+      { "key": "field_tcca_ev_time_start", "label": "Start time",   "name": "time_start",      "type": "time_picker", "display_format": "H:i", "return_format": "H:i" },
+      { "key": "field_tcca_ev_time_end",   "label": "End time",     "name": "time_end",        "type": "time_picker", "display_format": "H:i", "return_format": "H:i" },
+      { "key": "field_tcca_ev_date_th",    "label": "Display date (TH)", "name": "date_display_th", "type": "text", "instructions": "เช่น 27 เม.ย. 69" },
+      { "key": "field_tcca_ev_day",        "label": "Day label",    "name": "day_label",       "type": "text", "instructions": "เช่น 15" },
+      { "key": "field_tcca_ev_month",      "label": "Month label",  "name": "month_label",     "type": "text", "instructions": "เช่น MAY" },
+      { "key": "field_tcca_ev_tag",        "label": "Tag",          "name": "tag",             "type": "text", "instructions": "Workshop / Roundtable / Summit ..." },
+      { "key": "field_tcca_ev_host",       "label": "Host",         "name": "host",            "type": "text" },
+      { "key": "field_tcca_ev_venue",      "label": "Venue",        "name": "venue",           "type": "text" },
+      { "key": "field_tcca_ev_featured",   "label": "Is featured (press conference hero)", "name": "is_featured", "type": "true_false", "ui": 1 },
+      { "key": "field_tcca_ev_f_eyebrow",  "label": "Featured · eyebrow", "name": "featured_eyebrow", "type": "text" },
+      { "key": "field_tcca_ev_f_title",    "label": "Featured · title",   "name": "featured_title",   "type": "wysiwyg", "toolbar": "basic", "media_upload": 0 },
+      { "key": "field_tcca_ev_excerpt",    "label": "Excerpt",            "name": "excerpt",          "type": "textarea", "rows": 4 },
+      {
+        "key": "field_tcca_ev_agenda", "label": "Agenda", "name": "agenda", "type": "repeater", "layout": "table", "button_label": "เพิ่มวาระ",
+        "sub_fields": [
+          { "key": "field_tcca_ev_ag_time",  "label": "Time",  "name": "time",  "type": "text" },
+          { "key": "field_tcca_ev_ag_label", "label": "Label", "name": "label", "type": "text" }
+        ]
+      },
+      { "key": "field_tcca_ev_cta_label", "label": "CTA label", "name": "cta_label", "type": "text", "default_value": "ลงทะเบียนเข้าร่วมงาน" },
+      { "key": "field_tcca_ev_cta_href",  "label": "CTA link",  "name": "cta_href",  "type": "url" },
+      { "key": "field_tcca_ev_cover",     "label": "Cover image","name": "cover",     "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_ev_sticker",   "label": "Sticker image (featured only)", "name": "sticker", "type": "image", "return_format": "array", "preview_size": "thumbnail" },
+      { "key": "field_tcca_ev_og",        "label": "OG image (override)", "name": "og_image", "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_ev_venue_map", "label": "Venue map / floor plan", "name": "venue_map", "type": "image", "return_format": "array", "preview_size": "medium" },
+      {
+        "key": "field_tcca_ev_gallery", "label": "Event gallery", "name": "gallery", "type": "gallery", "return_format": "array", "preview_size": "medium", "insert": "append"
+      },
+      {
+        "key": "field_tcca_ev_attach", "label": "Attachments (เช่น กำหนดการ PDF)", "name": "attachments", "type": "repeater", "layout": "table", "button_label": "เพิ่มไฟล์",
+        "sub_fields": [
+          { "key": "field_tcca_ev_attach_label", "label": "Label", "name": "label", "type": "text" },
+          { "key": "field_tcca_ev_attach_file",  "label": "File",  "name": "file",  "type": "file", "return_format": "array" }
+        ]
+      }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_event" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "eventFields"
+  },
+
+  {
+    "key": "group_tcca_partner_fields",
+    "title": "Partner — Fields",
+    "fields": [
+      { "key": "field_tcca_prt_slug",    "label": "Slug (unique)", "name": "slug",    "type": "text", "required": 1 },
+      { "key": "field_tcca_prt_logo",    "label": "Logo",          "name": "logo",    "type": "image", "return_format": "array", "preview_size": "medium" },
+      { "key": "field_tcca_prt_accent",  "label": "Accent tone (fallback wordmark)", "name": "accent", "type": "select", "choices": { "navy": "Navy", "orange": "Orange", "gradient": "Gradient" }, "default_value": "navy", "return_format": "value" },
+      { "key": "field_tcca_prt_website", "label": "Website URL",   "name": "website", "type": "url" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_partner" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "partnerFields"
+  },
+
+  {
+    "key": "group_tcca_pillar_fields",
+    "title": "Pillar — Fields",
+    "fields": [
+      { "key": "field_tcca_pil_num",   "label": "Number (01 – 99)", "name": "number",      "type": "text", "required": 1 },
+      { "key": "field_tcca_pil_desc",  "label": "Description",      "name": "description", "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_pil_from",  "label": "Gradient · from",  "name": "color_from",  "type": "color_picker", "default_value": "#ff5a8a" },
+      { "key": "field_tcca_pil_to",    "label": "Gradient · to",    "name": "color_to",    "type": "color_picker", "default_value": "#e87a26" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_pillar" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "pillarFields"
+  },
+
+  {
+    "key": "group_tcca_committee_fields",
+    "title": "Committee Group — Fields",
+    "fields": [
+      { "key": "field_tcca_cmt_role",  "label": "Role (EN)",   "name": "role_en",     "type": "text", "required": 1 },
+      { "key": "field_tcca_cmt_count", "label": "Count label", "name": "count_label", "type": "text", "instructions": "เช่น '12 ท่าน'" },
+      {
+        "key": "field_tcca_cmt_members", "label": "Members", "name": "members", "type": "repeater", "layout": "block", "button_label": "เพิ่มสมาชิก",
+        "sub_fields": [
+          { "key": "field_tcca_cmt_m_name",  "label": "Name",     "name": "name",     "type": "text" },
+          { "key": "field_tcca_cmt_m_role",  "label": "Position", "name": "position", "type": "text" },
+          { "key": "field_tcca_cmt_m_photo", "label": "Photo",    "name": "photo",    "type": "image", "return_format": "array", "preview_size": "thumbnail" },
+          { "key": "field_tcca_cmt_m_bio",   "label": "Short bio","name": "bio",      "type": "textarea", "rows": 3 }
+        ]
+      }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_committee" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "committeeFields"
+  },
+
+  {
+    "key": "group_tcca_timeline_fields",
+    "title": "Timeline Entry — Fields",
+    "fields": [
+      { "key": "field_tcca_tlm_year", "label": "Year label", "name": "year", "type": "text", "required": 1, "instructions": "เช่น 2024 หรือ 'ต่อไป'" },
+      { "key": "field_tcca_tlm_body", "label": "Body",       "name": "body", "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_tlm_image","label": "Image (optional)", "name": "image", "type": "image", "return_format": "array", "preview_size": "medium" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_timeline" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "timelineFields"
+  },
+
+  {
+    "key": "group_tcca_benefit_fields",
+    "title": "Membership Benefit — Fields",
+    "fields": [
+      { "key": "field_tcca_ben_num",  "label": "Number", "name": "number", "type": "text", "required": 1 },
+      { "key": "field_tcca_ben_body", "label": "Body",   "name": "body",   "type": "textarea", "rows": 3 },
+      { "key": "field_tcca_ben_icon", "label": "Icon image (optional)", "name": "icon", "type": "image", "return_format": "array", "preview_size": "thumbnail" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "tcca_benefit" }]],
+    "active": true, "show_in_rest": 1, "show_in_graphql": 1, "graphql_field_name": "benefitFields"
+  }
+]

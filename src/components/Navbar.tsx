@@ -1,20 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
+import type { Bootstrap } from "@/lib/cms";
 
-const links = [
-  { href: "/about", label: "เกี่ยวกับสมาคม" },
-  { href: "/#pillars", label: "พันธกิจ" },
-  { href: "/#events", label: "กิจกรรม" },
-  { href: "/news", label: "ข่าวสาร" },
-  { href: "/#partners", label: "เครือข่าย" },
-];
-
-export function Navbar() {
+export function Navbar({ nav }: { nav: Bootstrap["navigation"] }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const links = nav.primary_menu;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -37,7 +31,7 @@ export function Navbar() {
         <nav className="hidden items-center gap-1 lg:flex">
           {links.map((l) => (
             <a
-              key={l.href}
+              key={l.href + l.label}
               href={l.href}
               className="font-display rounded-full px-4 py-2 text-xl font-medium text-navy-700 transition-colors hover:bg-navy-600/5 hover:text-navy-800"
             >
@@ -48,10 +42,10 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="/register"
+            href={nav.cta_href}
             className="font-display hidden rounded-full bg-navy-600 px-6 py-3 text-lg font-semibold text-cream shadow-sm transition-all hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-lg md:inline-flex"
           >
-            สมัครสมาชิก
+            {nav.cta_label}
             <span aria-hidden className="ml-2">→</span>
           </a>
           <button
@@ -90,7 +84,7 @@ export function Navbar() {
         <nav className="mx-4 mb-3 rounded-3xl border border-navy-600/10 bg-cream p-3 shadow-lg">
           {links.map((l) => (
             <a
-              key={l.href}
+              key={l.href + l.label}
               href={l.href}
               onClick={() => setOpen(false)}
               className="font-display block rounded-2xl px-4 py-3 text-lg font-medium text-navy-700 hover:bg-navy-600/5"
@@ -99,11 +93,11 @@ export function Navbar() {
             </a>
           ))}
           <a
-            href="/register"
+            href={nav.cta_href}
             onClick={() => setOpen(false)}
             className="font-display mt-2 block rounded-2xl bg-navy-600 px-4 py-3 text-center text-lg font-semibold text-cream"
           >
-            สมัครสมาชิก →
+            {nav.cta_label} →
           </a>
         </nav>
       </div>

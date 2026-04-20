@@ -1,52 +1,41 @@
 import Link from "next/link";
+import type { ArticleCms, HomeCms } from "@/lib/cms";
+import { fbArticles, fbHome } from "@/lib/cms-fallback";
 
-const featured = {
-  tag: "แถลงการณ์",
-  date: "27 เม.ย. 2569",
-  readMinutes: 4,
-  title:
-    "TCCA เปิดตัวอย่างเป็นทางการ พร้อมประกาศวิสัยทัศน์ยกระดับวงการครีเอเตอร์ไทย",
-  excerpt:
-    "สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทยเปิดตัวอย่างเป็นทางการ ณ SCBX Next Tech พร้อมเวทีเสวนาพิเศษโดยผู้นำอุตสาหกรรม",
-  author: "Newsroom",
-  cover: "/news/press-conference.jpg",
+const FALLBACK_COVERS = {
+  featured: "/news/press-conference.jpg",
+  insight: "/news/agenda.jpg",
+  community: "/news/invite.jpg",
 };
 
-const insight = {
-  tag: "Insight",
-  date: "10 เม.ย. 2569",
-  bigNumber: "2026",
-  title: "Creator Economy Thailand Report",
-  subtitle: "โตอย่างไร · โตไปทางไหน",
-  excerpt:
-    "ข้อมูลเชิงลึกแรกของ TCCA พร้อมตัวเลขสำคัญที่แบรนด์และครีเอเตอร์ต้องรู้",
-  cover: "/news/agenda.jpg",
-};
+export function News({
+  section,
+  featured,
+  insight,
+  community,
+}: {
+  section?: HomeCms["news_section"];
+  featured?: ArticleCms | null;
+  insight?: ArticleCms | null;
+  community?: ArticleCms | null;
+}) {
+  const s = section ?? fbHome.news_section;
+  const f = featured ?? { ...fbArticles[0], tag_label: "แถลงการณ์" };
+  const i = insight ?? { ...fbArticles[1], tag_label: "Insight" };
+  const c = community ?? { ...fbArticles[2], tag_label: "Community" };
 
-const community = {
-  tag: "Community",
-  date: "01 เม.ย. 2569",
-  title: "เปิดรับสมาชิกรุ่นก่อตั้ง",
-  highlight: "1,000 คนแรก",
-  excerpt:
-    "Workshop ฟรีตลอดปีแรก เครือข่ายพาร์ทเนอร์ และสิทธิพิเศษอีกมากมาย",
-  cover: "/news/press-conference.jpg",
-};
-
-export function News() {
   return (
     <section id="news" className="relative pt-12 pb-24 md:pt-16 md:pb-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-tcca">
-              Newsroom
+              {s.eyebrow}
             </p>
-            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-navy-700 md:text-6xl">
-              ข่าวสารและ
-              <br />
-              <span className="brand-gradient-text">บทความล่าสุด</span>
-            </h2>
+            <h2
+              className="mt-4 font-display text-4xl font-bold leading-tight text-navy-700 md:text-6xl"
+              dangerouslySetInnerHTML={{ __html: s.title }}
+            />
           </div>
           <a
             href="/news"
@@ -60,54 +49,53 @@ export function News() {
         </div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-3 md:grid-rows-[auto_auto]">
-          <FeaturedCard data={featured} />
-          <InsightCard data={insight} />
-          <CommunityCard data={community} />
+          <FeaturedCard data={f} />
+          <InsightCard
+            data={i}
+            bigNumber={s.insight_big_number}
+            subtitle={s.insight_subtitle}
+          />
+          <CommunityCard data={c} highlight={s.community_highlight} />
         </div>
       </div>
     </section>
   );
 }
 
-/* ==========================================================
- * FEATURED — editorial magazine card
- * ========================================================== */
+function articleHref(a: ArticleCms) {
+  return a.slug ? `/news/${a.slug}` : "/detail";
+}
 
-function FeaturedCard({ data }: { data: typeof featured }) {
+function FeaturedCard({ data }: { data: ArticleCms }) {
+  const cover = data.cover?.url ?? FALLBACK_COVERS.featured;
   return (
     <Link
-      href="/detail"
+      href={articleHref(data)}
       className="group relative col-span-1 row-span-2 grid overflow-hidden rounded-[2rem] bg-navy-700 text-cream shadow-xl md:col-span-2 md:grid-cols-[1fr_1.1fr]"
     >
-      {/* ========== COVER side ========== */}
       <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data.cover}
-          alt={data.title}
+          src={cover}
+          alt={data.cover?.alt || data.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
-        {/* bottom-up fade on mobile for legibility when stacked */}
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-navy-700/90 via-navy-700/10 to-transparent md:hidden"
         />
-        {/* inner edge fade on desktop */}
         <div
           aria-hidden
           className="absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-r from-transparent to-navy-700 md:block"
         />
 
-        {/* floating tag */}
         <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-lg">
           <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-          Featured · {data.tag}
+          Featured · {data.tag_label}
         </span>
       </div>
 
-      {/* ========== CONTENT side ========== */}
       <div className="relative flex flex-col p-7 md:p-10">
-        {/* ambient fx on content side */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 dot-grid-light opacity-20"
@@ -130,11 +118,11 @@ function FeaturedCard({ data }: { data: typeof featured }) {
         <div className="relative">
           <div className="flex items-center gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
-              {data.date}
+              {data.date_th}
             </span>
             <span aria-hidden className="h-px flex-1 bg-cream/15" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
-              {data.readMinutes} min read
+              {data.read_minutes} min read
             </span>
           </div>
 
@@ -153,10 +141,10 @@ function FeaturedCard({ data }: { data: typeof featured }) {
             </span>
             <div className="min-w-0 text-sm">
               <p className="truncate font-semibold text-cream">
-                {data.author}
+                {data.author_display}
               </p>
               <p className="truncate text-xs text-cream/60">
-                TCCA Official
+                {data.author_role}
               </p>
             </div>
           </div>
@@ -175,36 +163,39 @@ function FeaturedCard({ data }: { data: typeof featured }) {
   );
 }
 
-/* ==========================================================
- * INSIGHT — data-forward card with large number
- * ========================================================== */
-
-function InsightCard({ data }: { data: typeof insight }) {
+function InsightCard({
+  data,
+  bigNumber,
+  subtitle,
+}: {
+  data: ArticleCms;
+  bigNumber: string;
+  subtitle: string;
+}) {
+  const cover = data.cover?.url ?? FALLBACK_COVERS.insight;
   return (
     <Link
-      href="/detail"
+      href={articleHref(data)}
       className="group relative flex flex-col overflow-hidden rounded-[2rem] bg-white shadow-sm ring-1 ring-navy-600/10 transition-all hover:-translate-y-1 hover:shadow-lg hover:ring-orange-tcca/40"
     >
-      {/* cover */}
       <div className="relative h-32 overflow-hidden md:h-36">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data.cover}
-          alt={data.title}
+          src={cover}
+          alt={data.cover?.alt || data.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
         <span className="absolute left-4 top-4 inline-flex rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream shadow-md">
-          {data.tag}
+          {data.tag_label}
         </span>
         <span
           className="absolute bottom-2 right-4 font-display text-4xl font-bold !leading-none tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)] md:text-5xl"
-          aria-label={data.bigNumber}
+          aria-label={bigNumber}
         >
-          <span className="brand-gradient-text">{data.bigNumber}</span>
+          <span className="brand-gradient-text">{bigNumber}</span>
         </span>
       </div>
 
-      {/* mini-chart decoration on content area */}
       <div className="relative flex flex-1 flex-col p-7 pt-5">
         <svg
           aria-hidden
@@ -237,7 +228,7 @@ function InsightCard({ data }: { data: typeof insight }) {
             {data.title}
           </h3>
           <p className="mt-1 text-sm font-medium text-orange-tcca">
-            {data.subtitle}
+            {subtitle}
           </p>
 
           <p className="mt-4 text-xs leading-relaxed text-navy-600/70">
@@ -246,7 +237,7 @@ function InsightCard({ data }: { data: typeof insight }) {
         </div>
 
         <div className="relative mt-auto flex items-center justify-between pt-6 text-xs font-semibold">
-          <span className="text-navy-600/60">{data.date}</span>
+          <span className="text-navy-600/60">{data.date_th}</span>
           <span className="font-display inline-flex items-center gap-1 text-navy-700 transition-transform group-hover:translate-x-0.5">
             ดูรายงาน
             <span aria-hidden>→</span>
@@ -257,27 +248,28 @@ function InsightCard({ data }: { data: typeof insight }) {
   );
 }
 
-/* ==========================================================
- * COMMUNITY — sticker-style card
- * ========================================================== */
-
-function CommunityCard({ data }: { data: typeof community }) {
+function CommunityCard({
+  data,
+  highlight,
+}: {
+  data: ArticleCms;
+  highlight: string;
+}) {
+  const cover = data.cover?.url ?? FALLBACK_COVERS.community;
   return (
     <Link
-      href="/detail"
+      href={articleHref(data)}
       className="group relative isolate flex flex-col overflow-hidden rounded-[2rem] bg-orange-tcca text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl"
     >
-      {/* cover */}
       <div className="relative h-44 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data.cover}
-          alt={data.title}
+          src={cover}
+          alt={data.cover?.alt || data.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
-        {/* tag + star */}
         <span className="absolute left-4 top-4 inline-flex w-fit rounded-full bg-orange-tcca px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-white shadow-md">
-          {data.tag}
+          {data.tag_label}
         </span>
         <svg
           aria-hidden
@@ -289,7 +281,6 @@ function CommunityCard({ data }: { data: typeof community }) {
         </svg>
       </div>
 
-      {/* diagonal stripes on content area only */}
       <div className="relative flex flex-1 flex-col p-7">
         <div
           aria-hidden
@@ -303,14 +294,18 @@ function CommunityCard({ data }: { data: typeof community }) {
         <div className="relative">
           <p className="font-display text-[30px] font-bold !leading-[1.05] text-white md:text-[34px]">
             {data.title}
-            <br />
-            <span className="relative inline-block">
-              <span className="relative z-10">{data.highlight}</span>
-              <span
-                aria-hidden
-                className="absolute -bottom-1 left-0 right-0 h-3 rounded-sm bg-navy-700/40"
-              />
-            </span>
+            {highlight ? (
+              <>
+                <br />
+                <span className="relative inline-block">
+                  <span className="relative z-10">{highlight}</span>
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-1 left-0 right-0 h-3 rounded-sm bg-navy-700/40"
+                  />
+                </span>
+              </>
+            ) : null}
           </p>
 
           <p className="mt-4 text-xs leading-relaxed text-white/90">
@@ -320,7 +315,7 @@ function CommunityCard({ data }: { data: typeof community }) {
 
         <div className="relative mt-auto flex items-center justify-between pt-6">
           <span className="text-[11px] font-semibold text-white/75">
-            {data.date}
+            {data.date_th}
           </span>
           <span
             aria-hidden

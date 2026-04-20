@@ -1,46 +1,35 @@
 import Image from "next/image";
+import type { EventCms, HomeCms } from "@/lib/cms";
+import { fbEventsFeatured, fbEventsUpcoming, fbHome } from "@/lib/cms-fallback";
 
-const upcoming = [
-  {
-    date: "15 พ.ค. 69",
-    day: "15",
-    month: "MAY",
-    title: "Creator Masterclass · Storytelling for Short-form",
-    tag: "Workshop",
-    host: "TCCA × iCreator",
-  },
-  {
-    date: "04 มิ.ย. 69",
-    day: "04",
-    month: "JUN",
-    title: "Roundtable: อนาคต Affiliate & Live Commerce ไทย",
-    tag: "Roundtable",
-    host: "TCCA",
-  },
-  {
-    date: "22 ก.ค. 69",
-    day: "22",
-    month: "JUL",
-    title: "Thailand Creator Summit 2026",
-    tag: "Summit",
-    host: "TCCA × Partners",
-  },
-];
+export function Events({
+  section,
+  featured,
+  upcoming,
+  avatarUrl,
+}: {
+  section?: HomeCms["events_section"];
+  featured?: EventCms | null;
+  upcoming?: EventCms[];
+  avatarUrl?: string;
+}) {
+  const s = section ?? fbHome.events_section;
+  const f = featured ?? fbEventsFeatured;
+  const list = upcoming && upcoming.length ? upcoming : fbEventsUpcoming;
+  const sticker = f.sticker?.url ?? avatarUrl ?? "/brand/profile-gradient.jpg";
 
-export function Events() {
   return (
     <section id="events" className="relative pt-24 pb-12 md:pt-32 md:pb-16">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-tcca">
-              Events & Agenda
+              {s.eyebrow}
             </p>
-            <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-navy-700 md:text-6xl">
-              มาเจอกัน
-              <br />
-              ที่งานของเรา
-            </h2>
+            <h2
+              className="mt-4 font-display text-4xl font-bold leading-tight text-navy-700 md:text-6xl"
+              dangerouslySetInnerHTML={{ __html: s.title }}
+            />
           </div>
           <a
             href="#"
@@ -50,7 +39,6 @@ export function Events() {
           </a>
         </div>
 
-        {/* FEATURED press conference */}
         <article className="group relative mt-12 overflow-hidden rounded-[2.5rem] bg-navy-700 text-cream shadow-2xl">
           <div aria-hidden className="absolute inset-0 dot-grid-light opacity-30" />
           <div
@@ -69,23 +57,19 @@ export function Events() {
                   Featured
                 </span>
                 <span className="text-xs font-semibold uppercase tracking-[0.28em] text-cream/70">
-                  Press Conference · Grand Opening
+                  {f.featured_eyebrow || "Press Conference · Grand Opening"}
                 </span>
               </div>
 
-              <h3 className="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl">
-                แถลงข่าว
-                <br />
-                <span className="brand-gradient-text">เปิดตัวสมาคม</span>
-                <br />
-                อย่างเป็นทางการ
-              </h3>
+              <h3
+                className="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl"
+                dangerouslySetInnerHTML={{
+                  __html: f.featured_title || f.title,
+                }}
+              />
 
               <p className="mt-6 max-w-lg text-base leading-relaxed text-cream/80">
-                ร่วมเป็นสักขีพยานวันสำคัญของวงการครีเอเตอร์ไทย
-                พร้อมประกาศวิสัยทัศน์ คณะกรรมการสมาคม และเวทีเสวนาพิเศษ
-                &ldquo;อนาคตวงการและวิชาชีพ&rdquo;
-                โดยผู้นำอุตสาหกรรมตัวจริง
+                {f.excerpt}
               </p>
 
               <dl className="mt-8 grid grid-cols-2 gap-6">
@@ -94,7 +78,7 @@ export function Events() {
                     Date
                   </dt>
                   <dd className="mt-1 font-display text-2xl font-bold">
-                    27 เม.ย. 69
+                    {f.date_display_th || f.event_date}
                   </dd>
                 </div>
                 <div>
@@ -102,7 +86,7 @@ export function Events() {
                     Time
                   </dt>
                   <dd className="mt-1 font-display text-2xl font-bold">
-                    13:00 – 16:00
+                    {f.time_start} – {f.time_end}
                   </dd>
                 </div>
                 <div className="col-span-2">
@@ -110,46 +94,39 @@ export function Events() {
                     Venue
                   </dt>
                   <dd className="mt-1 font-display text-xl font-semibold">
-                    SCBX Next Tech · ชั้น 4 ศูนย์การค้าสยามพารากอน
+                    {f.venue}
                   </dd>
                 </div>
               </dl>
 
-              <a
-                href="#"
-                className="font-display mt-10 inline-flex items-center gap-3 rounded-full bg-cream px-6 py-3.5 text-base font-semibold text-navy-700 transition hover:bg-white"
-              >
-                ลงทะเบียนเข้าร่วมงาน
-                <span
-                  aria-hidden
-                  className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-tcca text-white"
+              {f.cta_href && (
+                <a
+                  href={f.cta_href}
+                  className="font-display mt-10 inline-flex items-center gap-3 rounded-full bg-cream px-6 py-3.5 text-base font-semibold text-navy-700 transition hover:bg-white"
                 >
-                  ↗
-                </span>
-              </a>
+                  {f.cta_label || "ลงทะเบียนเข้าร่วมงาน"}
+                  <span
+                    aria-hidden
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-tcca text-white"
+                  >
+                    ↗
+                  </span>
+                </a>
+              )}
             </div>
 
-            {/* agenda ticker */}
             <div className="relative">
               <div className="rounded-3xl border border-cream/10 bg-navy-600/40 p-6 backdrop-blur">
                 <h4 className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-light">
                   Agenda
                 </h4>
                 <ul className="mt-5 space-y-4">
-                  {[
-                    ["13:00", "ลงทะเบียนผู้เข้าร่วมงาน"],
-                    ["13:30", "Opening Session · VTR แนะนำสมาคม"],
-                    ["13:35", "วิสัยทัศน์และวัตถุประสงค์"],
-                    ["13:50", "ที่ปรึกษา & คณะกรรมการสมาคม"],
-                    ["14:20", "เวทีเสวนา · อนาคตวงการและวิชาชีพ"],
-                    ["15:20", "ถ่ายภาพร่วมกัน"],
-                    ["15:30", "สัมภาษณ์สื่อมวลชน"],
-                  ].map(([t, l]) => (
-                    <li key={t} className="flex gap-4 text-sm">
+                  {f.agenda.map((a, i) => (
+                    <li key={`${a.time}-${i}`} className="flex gap-4 text-sm">
                       <span className="w-14 shrink-0 font-mono font-semibold text-orange-light">
-                        {t}
+                        {a.time}
                       </span>
-                      <span className="text-cream/90">{l}</span>
+                      <span className="text-cream/90">{a.label}</span>
                     </li>
                   ))}
                 </ul>
@@ -157,7 +134,7 @@ export function Events() {
 
               <div className="absolute -top-4 -right-4 hidden h-24 w-24 rotate-[8deg] overflow-hidden rounded-2xl border-4 border-navy-700 shadow-xl md:block">
                 <Image
-                  src="/brand/profile-gradient.jpg"
+                  src={sticker}
                   alt=""
                   width={200}
                   height={200}
@@ -168,24 +145,23 @@ export function Events() {
           </div>
         </article>
 
-        {/* upcoming grid */}
         <div className="mt-10">
           <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-navy-600/70">
             Upcoming · กิจกรรมถัดไป
           </h3>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {upcoming.map((e) => (
+            {list.map((e) => (
               <article
-                key={e.title}
+                key={e.slug}
                 className="group flex flex-col justify-between rounded-3xl border border-navy-600/10 bg-white p-6 transition-all hover:-translate-y-1 hover:border-orange-tcca/50 hover:shadow-lg"
               >
                 <div className="flex items-start gap-5">
                   <div className="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-navy-700 text-cream">
                     <span className="font-display text-3xl font-bold leading-none">
-                      {e.day}
+                      {e.day_label}
                     </span>
                     <span className="mt-1 text-[10px] font-semibold tracking-widest text-orange-light">
-                      {e.month}
+                      {e.month_label}
                     </span>
                   </div>
                   <div className="min-w-0">

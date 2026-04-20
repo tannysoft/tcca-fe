@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  TCCA — Seed news (9 articles) for the homepage / /news page.
+
+  How to import:
+    WordPress admin → Tools → Import → WordPress → Run Importer →
+    Upload this file → Assign authors → check "Download and import file attachments"
+    (optional; there are no attachments) → Submit.
+
+  After import:
+    1) Upload a Featured Image to each post manually (drag-drop inside editor).
+    2) Edit /home page in WordPress and point the News section fields
+       (featured_article / insight_article / community_article) at the
+       3 posts of your choice.
+-->
+<rss version="2.0"
+  xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:wp="http://wordpress.org/export/1.2/">
+<channel>
+  <title>TCCA Seed — News</title>
+  <link>https://tcca-cms.livetubex.com</link>
+  <description>Seed news articles for TCCA headless frontend</description>
+  <pubDate>Mon, 20 Apr 2026 00:00:00 +0000</pubDate>
+  <language>th</language>
+  <wp:wxr_version>1.2</wp:wxr_version>
+  <wp:base_site_url>https://tcca-cms.livetubex.com</wp:base_site_url>
+  <wp:base_blog_url>https://tcca-cms.livetubex.com</wp:base_blog_url>
+
+  <wp:author>
+    <wp:author_id>1</wp:author_id>
+    <wp:author_login><![CDATA[admin]]></wp:author_login>
+    <wp:author_email><![CDATA[admin@tcca.or.th]]></wp:author_email>
+    <wp:author_display_name><![CDATA[TCCA Newsroom]]></wp:author_display_name>
+    <wp:author_first_name><![CDATA[TCCA]]></wp:author_first_name>
+    <wp:author_last_name><![CDATA[Newsroom]]></wp:author_last_name>
+  </wp:author>
+
+  <!-- ============ CATEGORIES ============ -->
+  <wp:category>
+    <wp:term_id>1001</wp:term_id>
+    <wp:category_nicename>announcement</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[แถลงการณ์]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1002</wp:term_id>
+    <wp:category_nicename>insight</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Insight]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1003</wp:term_id>
+    <wp:category_nicename>community</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Community]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1004</wp:term_id>
+    <wp:category_nicename>events</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Events]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1005</wp:term_id>
+    <wp:category_nicename>policy</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Policy]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1006</wp:term_id>
+    <wp:category_nicename>program</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Program]]></wp:cat_name>
+  </wp:category>
+  <wp:category>
+    <wp:term_id>1007</wp:term_id>
+    <wp:category_nicename>education</wp:category_nicename>
+    <wp:category_parent></wp:category_parent>
+    <wp:cat_name><![CDATA[Education]]></wp:cat_name>
+  </wp:category>
+
+  <!-- ============ TAGS ============ -->
+  <wp:tag><wp:term_id>2001</wp:term_id><wp:tag_slug>tcca</wp:tag_slug><wp:tag_name><![CDATA[TCCA]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2002</wp:term_id><wp:tag_slug>creator-economy</wp:tag_slug><wp:tag_name><![CDATA[Creator Economy]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2003</wp:term_id><wp:tag_slug>press-conference</wp:tag_slug><wp:tag_name><![CDATA[Press Conference]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2004</wp:term_id><wp:tag_slug>creator-standards</wp:tag_slug><wp:tag_name><![CDATA[Creator Standards]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2005</wp:term_id><wp:tag_slug>thailand</wp:tag_slug><wp:tag_name><![CDATA[Thailand]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2006</wp:term_id><wp:tag_slug>workshop</wp:tag_slug><wp:tag_name><![CDATA[Workshop]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2007</wp:term_id><wp:tag_slug>summit</wp:tag_slug><wp:tag_name><![CDATA[Summit]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2008</wp:term_id><wp:tag_slug>brand-deal</wp:tag_slug><wp:tag_name><![CDATA[Brand Deal]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2009</wp:term_id><wp:tag_slug>masterclass</wp:tag_slug><wp:tag_name><![CDATA[Masterclass]]></wp:tag_name></wp:tag>
+  <wp:tag><wp:term_id>2010</wp:term_id><wp:tag_slug>research</wp:tag_slug><wp:tag_name><![CDATA[Research]]></wp:tag_name></wp:tag>
+
+  <!-- ==========================================================
+       1) FEATURED — TCCA เปิดตัวอย่างเป็นทางการ
+       ========================================================== -->
+  <item>
+    <title>TCCA เปิดตัวอย่างเป็นทางการ พร้อมประกาศวิสัยทัศน์ยกระดับวงการครีเอเตอร์ไทย</title>
+    <link>https://tcca-cms.livetubex.com/tcca-launch-2026/</link>
+    <pubDate>Mon, 27 Apr 2026 06:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1001</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>เมื่อวันที่ 27 เมษายน 2569 ณ SCBX Next Tech ชั้น 4 ศูนย์การค้าสยามพารากอน <strong>สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย (TCCA)</strong> ได้เปิดตัวอย่างเป็นทางการ พร้อมประกาศคณะกรรมการสมาคม และแผนการทำงาน 3 ปีแรก</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>งานครั้งนี้ได้รับความสนใจจากสื่อมวลชน แบรนด์ชั้นนำ แพลตฟอร์มดิจิทัล และครีเอเตอร์จากทุกสาขาอาชีพ ซึ่งมาร่วมเป็นสักขีพยานในการเริ่มต้นของสมาคมวิชาชีพใหม่ ที่จะเป็นบ้านของครีเอเตอร์ไทย</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><p>เราเชื่อว่าครีเอเตอร์ไทยมีศักยภาพระดับโลก — สิ่งที่ต้องการคือโครงสร้างที่รองรับ และชุมชนที่เข้าใจกัน</p><cite>TCCA Manifesto</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:heading {"anchor":"vision"} -->
+<h2 id="vision">วิสัยทัศน์ของสมาคม</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>TCCA ตั้งเป้าหมายให้ครีเอเตอร์ไทยเป็นวิชาชีพที่ <strong>น่าภูมิใจและเติบโตได้ยั่งยืน</strong> ผ่านการสร้างมาตรฐานวิชาชีพ การคุ้มครองสิทธิ์ และการผลักดันนโยบายที่เอื้อต่อการเติบโต</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>สมาคมจะทำงานในบทบาท 3 ประการ — เป็น Gatekeeper ในเรื่องมาตรฐาน เป็น Bridge เชื่อมระหว่างครีเอเตอร์กับภาครัฐและเอกชน และเป็น Accelerator ที่ช่วยให้ครีเอเตอร์เติบโตได้เร็วขึ้น</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"anchor":"pillars"} -->
+<h2 id="pillars">6 พันธกิจหลัก</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list {"ordered":true} -->
+<ol><li>มาตรฐานวิชาชีพและจรรยาบรรณ</li><li>พัฒนาทักษะครีเอเตอร์ทุกระดับ</li><li>สร้างโอกาสทางธุรกิจและเครือข่าย</li><li>คุ้มครองสิทธิ์ สัญญา และความปลอดภัย</li><li>Research &amp; Insight ของวงการ</li><li>เชื่อมภาครัฐ-เอกชนและผลักดันนโยบาย</li></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"anchor":"speakers"} -->
+<h2 id="speakers">เวทีเสวนาพิเศษ · อนาคตวงการและวิชาชีพ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>ช่วงไฮไลต์ของงานคือเวทีเสวนาที่รวบรวมผู้นำวงการ 7 คน — จาก GMM Grammy, Woody World, YouWeeVee, Salmon House, Buff Geek, Tellscore และ The Zero Publishing — มาถกประเด็นเรื่องความเป็นไปได้ของอาชีพคอนเทนต์ครีเอเตอร์ในอีก 5 ปีข้างหน้า</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"anchor":"next"} -->
+<h2 id="next">ก้าวต่อไปของ TCCA</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>สมาคมจะเปิดรับสมาชิกรุ่นก่อตั้งจำนวนจำกัด 1,000 คนแรก พร้อมเริ่มโปรแกรม Masterclass และ Mentorship ตั้งแต่เดือนพฤษภาคม นอกจากนี้ยังเตรียมจัดงาน Thailand Creator Summit ครั้งแรกในเดือนกรกฎาคม 2569</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทยเปิดตัวอย่างเป็นทางการ ณ SCBX Next Tech พร้อมเวทีเสวนาพิเศษโดยผู้นำอุตสาหกรรม]]></excerpt:encoded>
+    <wp:post_id>1001</wp:post_id>
+    <wp:post_date>2026-04-27 13:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-27 06:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>tcca-launch-2026</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="announcement"><![CDATA[แถลงการณ์]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <category domain="post_tag" nicename="creator-economy"><![CDATA[Creator Economy]]></category>
+    <category domain="post_tag" nicename="press-conference"><![CDATA[Press Conference]]></category>
+    <category domain="post_tag" nicename="creator-standards"><![CDATA[Creator Standards]]></category>
+    <category domain="post_tag" nicename="thailand"><![CDATA[Thailand]]></category>
+    <wp:postmeta><wp:meta_key>subtitle</wp:meta_key><wp:meta_value><![CDATA[เปิดบ้าน TCCA · รวมพลังผู้นำวงการครีเอเตอร์ไทยในวันเดียว]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_subtitle</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_subtitle]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[4]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[1]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Newsroom]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Official]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_0_id</wp:meta_key><wp:meta_value><![CDATA[vision]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_0_id</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_id]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_0_label</wp:meta_key><wp:meta_value><![CDATA[วิสัยทัศน์สมาคม]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_0_label</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_label]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_1_id</wp:meta_key><wp:meta_value><![CDATA[pillars]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_1_id</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_id]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_1_label</wp:meta_key><wp:meta_value><![CDATA[6 พันธกิจหลัก]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_1_label</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_label]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_2_id</wp:meta_key><wp:meta_value><![CDATA[speakers]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_2_id</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_id]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_2_label</wp:meta_key><wp:meta_value><![CDATA[เวทีเสวนาพิเศษ]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_2_label</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_label]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_3_id</wp:meta_key><wp:meta_value><![CDATA[next]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_3_id</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_id]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc_3_label</wp:meta_key><wp:meta_value><![CDATA[ก้าวต่อไป]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc_3_label</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc_label]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>toc</wp:meta_key><wp:meta_value><![CDATA[4]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_toc</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_toc]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       2) INSIGHT — Creator Economy Thailand Report 2026
+       ========================================================== -->
+  <item>
+    <title>Creator Economy Thailand Report 2026 — โตอย่างไร โตไปทางไหน</title>
+    <link>https://tcca-cms.livetubex.com/creator-economy-report-2026/</link>
+    <pubDate>Fri, 10 Apr 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1002</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA เผยแพร่รายงานข้อมูลเชิงลึกฉบับแรก <strong>Creator Economy Thailand Report 2026</strong> ซึ่งรวบรวมตัวเลขและแนวโน้มของอุตสาหกรรมคอนเทนต์ครีเอเตอร์ไทยในรอบปีที่ผ่านมา พร้อมคาดการณ์ทิศทางในอีก 3 ปีข้างหน้า</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>ภาพรวมวงการ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>ปี 2569 คอนเทนต์ครีเอเตอร์ไทยมีขนาดตลาดรวมมากกว่า <strong>45,000 ล้านบาท</strong> เติบโตจากปีก่อนหน้า 28% โดยมีจำนวนครีเอเตอร์ฟูลไทม์มากกว่า 2.3 ล้านคน กระจายอยู่บนแพลตฟอร์มหลัก TikTok, YouTube, Instagram, Facebook และ LINE</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>กลุ่มที่โตเร็วที่สุด</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li><strong>Live Commerce</strong> — เติบโต 112% ต่อปี</li><li><strong>Affiliate</strong> — 68% ต่อปี</li><li><strong>Edutainment / How-to</strong> — 54% ต่อปี</li><li><strong>Short-form storytelling</strong> — 41% ต่อปี</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2>ข้อเสนอแนะเชิงนโยบาย</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>รายงานฉบับนี้เสนอให้ภาครัฐและเอกชนร่วมกันผลักดันมาตรฐานสัญญา การคุ้มครองลิขสิทธิ์ และระบบภาษีสำหรับครีเอเตอร์ให้ชัดเจน เพื่อรองรับการเติบโตในระยะยาว</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[รายงานข้อมูลเชิงลึกฉบับแรกของ TCCA พร้อมตัวเลขสำคัญที่แบรนด์และครีเอเตอร์ต้องรู้ในปีนี้]]></excerpt:encoded>
+    <wp:post_id>1002</wp:post_id>
+    <wp:post_date>2026-04-10 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-10 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-economy-report-2026</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="insight"><![CDATA[Insight]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <category domain="post_tag" nicename="creator-economy"><![CDATA[Creator Economy]]></category>
+    <category domain="post_tag" nicename="research"><![CDATA[Research]]></category>
+    <category domain="post_tag" nicename="thailand"><![CDATA[Thailand]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[8]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Insight Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Research]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       3) COMMUNITY — เปิดรับสมาชิกรุ่นก่อตั้ง
+       ========================================================== -->
+  <item>
+    <title>เปิดรับสมาชิกรุ่นก่อตั้ง 1,000 คนแรก</title>
+    <link>https://tcca-cms.livetubex.com/founding-members-1000/</link>
+    <pubDate>Wed, 01 Apr 2026 02:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1003</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA เปิดรับครีเอเตอร์ อินฟลูเอนเซอร์ และนักขายออนไลน์ทุกระดับเข้าร่วมเป็น <strong>สมาชิกรุ่นก่อตั้ง 1,000 คนแรก</strong> โดยไม่มีค่าใช้จ่ายตลอดปีแรก</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>สิทธิประโยชน์ที่ได้รับ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>Workshop &amp; Masterclass ฟรีตลอดปีแรก</li><li>เข้าถึงเครือข่ายครีเอเตอร์และแบรนด์พาร์ทเนอร์</li><li>ปรึกษากฎหมาย สัญญา ลิขสิทธิ์ และภาษี</li><li>ส่วนลดและสิทธิพิเศษจากพาร์ทเนอร์</li><li>ใบรับรองมาตรฐานวิชาชีพ TCCA</li><li>สิทธิ์โหวตในทิศทางของสมาคม</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>สมาชิกรุ่นก่อตั้งจะเป็นส่วนหนึ่งในการวางรากฐานวงการครีเอเตอร์ไทย และมีส่วนในการกำหนดทิศทางของสมาคมในระยะ 3 ปีแรก</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[Workshop ฟรีตลอดปีแรก เครือข่ายพาร์ทเนอร์ และสิทธิพิเศษอีกมากมายสำหรับครีเอเตอร์ที่เข้าร่วมในรอบก่อตั้ง]]></excerpt:encoded>
+    <wp:post_id>1003</wp:post_id>
+    <wp:post_date>2026-04-01 09:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-01 02:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>founding-members-1000</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="community"><![CDATA[Community]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[3]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Membership Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Official]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       4) EVENTS — Thailand Creator Summit 2026
+       ========================================================== -->
+  <item>
+    <title>Thailand Creator Summit 2026 เตรียมจัดเดือนกรกฎาคม</title>
+    <link>https://tcca-cms.livetubex.com/creator-summit-2026/</link>
+    <pubDate>Sun, 22 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1004</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA ประกาศจัดงาน <strong>Thailand Creator Summit 2026</strong> ครั้งแรก ในวันที่ 22 กรกฎาคม 2569 โดยเป็นเวทีรวมครีเอเตอร์ แบรนด์ และแพลตฟอร์มชั้นนำของประเทศ</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>ไฮไลต์ของงาน</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>Keynote จากผู้นำอุตสาหกรรมไทยและระดับภูมิภาค</li><li>Panel discussion ประเด็น Live Commerce, AI &amp; Creators, และ Brand Safety</li><li>Networking Dinner สำหรับสมาชิก TCCA</li><li>Creator Awards ครั้งแรกของวงการ</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Speaker Lineup ฉบับเต็มจะประกาศในเร็ว ๆ นี้ ติดตามข่าวสารได้ที่หน้า Events ของเว็บไซต์</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[เวทีรวมครีเอเตอร์ แบรนด์ และแพลตฟอร์มชั้นนำของไทย พร้อมประกาศ Speaker Lineup ในเร็วๆ นี้]]></excerpt:encoded>
+    <wp:post_id>1004</wp:post_id>
+    <wp:post_date>2026-03-22 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-22 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-summit-2026</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="events"><![CDATA[Events]]></category>
+    <category domain="post_tag" nicename="summit"><![CDATA[Summit]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[5]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Events Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Events]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       5) POLICY — ร่างมาตรฐานวิชาชีพครีเอเตอร์
+       ========================================================== -->
+  <item>
+    <title>ร่างมาตรฐานวิชาชีพครีเอเตอร์ไทย ฉบับที่ 1</title>
+    <link>https://tcca-cms.livetubex.com/creator-standards-draft/</link>
+    <pubDate>Sat, 14 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1005</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA เปิดร่างมาตรฐานวิชาชีพฉบับแรกให้สมาชิกและสาธารณะร่วมเสนอความเห็น ก่อนประกาศใช้เป็นแนวทางอ้างอิงของวงการครีเอเตอร์ไทย</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>ขอบเขตของร่าง</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>จรรยาบรรณการสร้างคอนเทนต์</li><li>การเปิดเผยความสัมพันธ์เชิงพาณิชย์ (disclosure)</li><li>มาตรฐานสัญญาระหว่างครีเอเตอร์กับแบรนด์</li><li>การคุ้มครองผู้บริโภคและข้อมูลส่วนบุคคล</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>ช่วงรับฟังความเห็นเปิดรับถึงวันที่ 30 เมษายน 2569 สมาชิกสามารถส่งความเห็นผ่านแบบฟอร์มในระบบสมาชิก</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[TCCA เปิดร่างมาตรฐานวิชาชีพให้สมาชิกร่วมเสนอความเห็น ก่อนประกาศใช้เป็นแนวทางอ้างอิงของวงการ]]></excerpt:encoded>
+    <wp:post_id>1005</wp:post_id>
+    <wp:post_date>2026-03-14 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-14 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-standards-draft</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="policy"><![CDATA[Policy]]></category>
+    <category domain="post_tag" nicename="creator-standards"><![CDATA[Creator Standards]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[6]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Standards Committee]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Policy]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       6) PROGRAM — TCCA Match
+       ========================================================== -->
+  <item>
+    <title>เปิดตัว TCCA Match — ระบบจับคู่ครีเอเตอร์กับแบรนด์</title>
+    <link>https://tcca-cms.livetubex.com/brand-match-program/</link>
+    <pubDate>Mon, 02 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1006</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA Match เป็นแพลตฟอร์มภายในสำหรับสมาชิก ช่วยจับคู่งานและพาร์ทเนอร์ที่ตรงกับสไตล์และกลุ่มผู้ติดตามของแต่ละครีเอเตอร์ เปิดให้บริการตั้งแต่เดือนพฤษภาคม 2569</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>ฟีเจอร์หลัก</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>Smart matching ด้วยข้อมูลผู้ติดตามจริงจากแพลตฟอร์ม</li><li>เทมเพลตสัญญามาตรฐาน TCCA</li><li>ระบบรีวิวและ rating สองทาง</li><li>Dashboard รายได้และ performance</li></ul>
+<!-- /wp:list -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[แพลตฟอร์มภายในสำหรับสมาชิก ช่วยจับคู่งานและพาร์ทเนอร์ที่ตรงกับสไตล์และผู้ติดตามของคุณ]]></excerpt:encoded>
+    <wp:post_id>1006</wp:post_id>
+    <wp:post_date>2026-03-02 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-02 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>brand-match-program</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="program"><![CDATA[Program]]></category>
+    <category domain="post_tag" nicename="brand-deal"><![CDATA[Brand Deal]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[4]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Product Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Match]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       7) EDUCATION — Masterclass Series
+       ========================================================== -->
+  <item>
+    <title>Masterclass Series ซีซันแรก เปิดให้สมาชิกลงทะเบียนแล้ว</title>
+    <link>https://tcca-cms.livetubex.com/masterclass-series-launch/</link>
+    <pubDate>Fri, 20 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1007</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA Masterclass Series ซีซันแรก <strong>8 คลาสจากผู้นำอุตสาหกรรม</strong> เปิดให้สมาชิกลงทะเบียนแล้วตั้งแต่วันนี้</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>หัวข้อในซีซันแรก</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>Storytelling for Short-form</li><li>Brand Deal 101 — ต่อรองอย่างไรให้ win-win</li><li>Tax &amp; Legal สำหรับครีเอเตอร์</li><li>Live Commerce Deep Dive</li><li>AI Tools for Content Production</li><li>Audience Analytics ที่ใช้ได้จริง</li><li>การสร้าง Personal Brand ที่ยั่งยืน</li><li>Crisis Management บนโลกออนไลน์</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>สมาชิกเข้าเรียนได้ฟรีตลอดซีซันแรก ผู้ที่ยังไม่เป็นสมาชิกสามารถซื้อเป็นรายคลาสได้เช่นกัน</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[8 คลาสจากผู้นำอุตสาหกรรม ครอบคลุมตั้งแต่ Storytelling, Brand Deal ไปจนถึง Tax & Legal สำหรับครีเอเตอร์]]></excerpt:encoded>
+    <wp:post_id>1007</wp:post_id>
+    <wp:post_date>2026-02-20 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-20 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>masterclass-series-launch</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="education"><![CDATA[Education]]></category>
+    <category domain="post_tag" nicename="masterclass"><![CDATA[Masterclass]]></category>
+    <category domain="post_tag" nicename="workshop"><![CDATA[Workshop]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[5]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Education Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Academy]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       8) ANNOUNCEMENT — Advisory Board
+       ========================================================== -->
+  <item>
+    <title>ประกาศคณะที่ปรึกษาสมาคม ชุดก่อตั้ง</title>
+    <link>https://tcca-cms.livetubex.com/advisory-board-announcement/</link>
+    <pubDate>Thu, 12 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1008</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA ประกาศคณะที่ปรึกษาชุดก่อตั้ง <strong>8 ผู้นำจากวงการสื่อ เอเจนซี่ และแพลตฟอร์มดิจิทัล</strong> ที่จะร่วมกำหนดทิศทางของสมาคมในระยะ 3 ปีแรก</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>คณะที่ปรึกษาทั้งหมดมีประสบการณ์เฉลี่ยมากกว่า 15 ปีในอุตสาหกรรมคอนเทนต์ไทย และร่วมขับเคลื่อนวงการในบทบาทต่าง ๆ มาอย่างยาวนาน</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>รายชื่อและโปรไฟล์ฉบับเต็มจะเผยแพร่ในหน้า "คณะกรรมการ" ของเว็บไซต์</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[8 ผู้นำจากวงการสื่อ เอเจนซี่ และแพลตฟอร์มดิจิทัล เข้าร่วมเป็นที่ปรึกษาของ TCCA]]></excerpt:encoded>
+    <wp:post_id>1008</wp:post_id>
+    <wp:post_date>2026-02-12 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-12 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>advisory-board-announcement</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="announcement"><![CDATA[แถลงการณ์]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[3]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Newsroom]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Official]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       9) INSIGHT — Research Call
+       ========================================================== -->
+  <item>
+    <title>เปิดรับงานวิจัยร่วม Creator Economy 2026</title>
+    <link>https://tcca-cms.livetubex.com/research-call-2026/</link>
+    <pubDate>Sun, 01 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?p=1009</guid>
+    <description></description>
+    <content:encoded><![CDATA[
+<!-- wp:paragraph -->
+<p>TCCA ร่วมกับมหาวิทยาลัยพันธมิตร เปิดรับโจทย์วิจัยเชิงลึกเกี่ยวกับเศรษฐกิจครีเอเตอร์ไทย ประจำปี 2569 ครอบคลุมทั้งด้านเศรษฐกิจ สังคม และเทคโนโลยี</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2>หัวข้อที่เปิดรับ</h2>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul><li>ผลกระทบของ AI ต่อการผลิตคอนเทนต์</li><li>พฤติกรรมผู้บริโภคบน Live Commerce</li><li>ความเป็นธรรมในการแบ่งรายได้ระหว่างครีเอเตอร์กับแพลตฟอร์ม</li><li>Mental health ของคอนเทนต์ครีเอเตอร์ไทย</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>งานวิจัยที่ผ่านการคัดเลือกจะได้รับทุนสนับสนุนและเผยแพร่ผ่านช่องทางของ TCCA พร้อมร่วมนำเสนอใน Thailand Creator Summit 2026</p>
+<!-- /wp:paragraph -->
+]]></content:encoded>
+    <excerpt:encoded><![CDATA[TCCA ร่วมกับมหาวิทยาลัยพันธมิตร เปิดรับโจทย์วิจัยเชิงลึกเกี่ยวกับเศรษฐกิจครีเอเตอร์ไทย]]></excerpt:encoded>
+    <wp:post_id>1009</wp:post_id>
+    <wp:post_date>2026-02-01 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-01 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>research-call-2026</wp:post_name>
+    <wp:status>publish</wp:status>
+    <wp:post_parent>0</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>post</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <category domain="category" nicename="insight"><![CDATA[Insight]]></category>
+    <category domain="post_tag" nicename="research"><![CDATA[Research]]></category>
+    <category domain="post_tag" nicename="creator-economy"><![CDATA[Creator Economy]]></category>
+    <category domain="post_tag" nicename="tcca"><![CDATA[TCCA]]></category>
+    <wp:postmeta><wp:meta_key>read_minutes</wp:meta_key><wp:meta_value><![CDATA[4]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_read_minutes</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_read]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>is_featured</wp:meta_key><wp:meta_value><![CDATA[0]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_is_featured</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_featured]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_display</wp:meta_key><wp:meta_value><![CDATA[Research Team]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_display</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_name]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>author_role</wp:meta_key><wp:meta_value><![CDATA[TCCA Research]]></wp:meta_value></wp:postmeta>
+    <wp:postmeta><wp:meta_key>_author_role</wp:meta_key><wp:meta_value><![CDATA[field_tcca_art_author_role]]></wp:meta_value></wp:postmeta>
+  </item>
+
+  <!-- ==========================================================
+       ATTACHMENTS — Unsplash seed images (Featured Image)
+       Each attachment's `post_parent` links to the article above.
+       The plugin's `import_end` hook auto-assigns these as
+       Featured Image for the parent post after import.
+       ========================================================== -->
+
+  <item>
+    <title>Cover — TCCA launch</title>
+    <link>https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Mon, 27 Apr 2026 06:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1101</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1101</wp:post_id>
+    <wp:post_date>2026-04-27 13:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-27 06:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>tcca-launch-2026-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1001</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Creator Economy Report</title>
+    <link>https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Fri, 10 Apr 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1102</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1102</wp:post_id>
+    <wp:post_date>2026-04-10 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-10 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-economy-report-2026-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1002</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Founding members</title>
+    <link>https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Wed, 01 Apr 2026 02:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1103</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1103</wp:post_id>
+    <wp:post_date>2026-04-01 09:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-04-01 02:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>founding-members-1000-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1003</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Thailand Creator Summit</title>
+    <link>https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Sun, 22 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1104</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1104</wp:post_id>
+    <wp:post_date>2026-03-22 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-22 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-summit-2026-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1004</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Creator standards draft</title>
+    <link>https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Sat, 14 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1105</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1105</wp:post_id>
+    <wp:post_date>2026-03-14 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-14 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>creator-standards-draft-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1005</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — TCCA Match</title>
+    <link>https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Mon, 02 Mar 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1106</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1106</wp:post_id>
+    <wp:post_date>2026-03-02 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-03-02 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>brand-match-program-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1006</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Masterclass series</title>
+    <link>https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Fri, 20 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1107</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1107</wp:post_id>
+    <wp:post_date>2026-02-20 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-20 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>masterclass-series-launch-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1007</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Advisory board</title>
+    <link>https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Thu, 12 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1108</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1108</wp:post_id>
+    <wp:post_date>2026-02-12 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-12 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>advisory-board-announcement-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1008</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+  <item>
+    <title>Cover — Research call</title>
+    <link>https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</link>
+    <pubDate>Sun, 01 Feb 2026 03:00:00 +0000</pubDate>
+    <dc:creator><![CDATA[admin]]></dc:creator>
+    <guid isPermaLink="false">https://tcca-cms.livetubex.com/?attachment_id=1109</guid>
+    <description></description>
+    <content:encoded><![CDATA[]]></content:encoded>
+    <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+    <wp:post_id>1109</wp:post_id>
+    <wp:post_date>2026-02-01 10:00:00</wp:post_date>
+    <wp:post_date_gmt>2026-02-01 03:00:00</wp:post_date_gmt>
+    <wp:comment_status>closed</wp:comment_status>
+    <wp:ping_status>closed</wp:ping_status>
+    <wp:post_name>research-call-2026-cover</wp:post_name>
+    <wp:status>inherit</wp:status>
+    <wp:post_parent>1009</wp:post_parent>
+    <wp:menu_order>0</wp:menu_order>
+    <wp:post_type>attachment</wp:post_type>
+    <wp:post_password></wp:post_password>
+    <wp:is_sticky>0</wp:is_sticky>
+    <wp:attachment_url>https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1600&amp;q=80&amp;auto=format&amp;fit=crop</wp:attachment_url>
+  </item>
+
+</channel>
+</rss>

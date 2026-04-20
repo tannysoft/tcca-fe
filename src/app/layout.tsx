@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, IBM_Plex_Sans_Thai_Looped } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { getBootstrap, mergeCms } from "@/lib/cms";
+import { fbBootstrap } from "@/lib/cms-fallback";
 
 // DB Heavent is loaded via plain @font-face in globals.css — not next/font —
 // because next/font's auto-generated metric overrides (ascent/descent) shift
@@ -55,20 +57,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bootstrap = mergeCms(await getBootstrap(), fbBootstrap);
+  const nav = bootstrap.navigation;
+  const footer = bootstrap.footer;
+
   return (
     <html
       lang="th"
       className={`${jakarta.variable} ${plexThai.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-navy-700 selection:bg-orange-tcca selection:text-white">
-        <Navbar />
+        <Navbar nav={nav} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer identity={bootstrap.identity} footer={footer} />
       </body>
     </html>
   );
