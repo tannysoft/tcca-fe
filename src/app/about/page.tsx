@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { PageBackdrop } from "@/components/PageBackdrop";
 import { getAbout, mergeCms, pickList } from "@/lib/cms";
 import { fbAbout } from "@/lib/cms-fallback";
 
@@ -30,6 +31,7 @@ export default async function AboutPage() {
 
   return (
     <>
+      <PageBackdrop />
       <PageHero
         eyebrow={d.hero.eyebrow}
         breadcrumbs={[

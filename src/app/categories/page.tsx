@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { PageBackdrop } from "@/components/PageBackdrop";
 import { getCategories } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default async function CategoriesPage() {
 
   return (
     <>
+      <PageBackdrop />
       <PageHero
         eyebrow="Categories"
         breadcrumbs={[
