@@ -364,7 +364,7 @@ function tcca_article_categories( $post_id ) {
 function tcca_article_tags( $post_id ) {
     $terms = get_the_terms( $post_id, 'post_tag' );
     if ( is_wp_error( $terms ) || empty( $terms ) ) return array();
-    return array_map( fn( $t ) => $t->name, $terms );
+    return array_map( fn( $t ) => array( 'slug' => $t->slug, 'name' => $t->name ), $terms );
 }
 
 /**
@@ -417,6 +417,23 @@ function tcca_article_payload( $post ) {
         }
     }
 
+    // Fall back to the WP post author when ACF author fields are empty.
+    $wp_user        = get_user_by( 'id', (int) $post->post_author );
+    $author_display = trim( (string) ( $fields['author_display'] ?? '' ) );
+    if ( $author_display === '' && $wp_user ) {
+        $author_display = $wp_user->display_name;
+    }
+    $author_role = trim( (string) ( $fields['author_role'] ?? '' ) );
+    if ( $author_role === '' && $wp_user ) {
+        $bio = trim( (string) get_user_meta( $wp_user->ID, 'description', true ) );
+        if ( $bio !== '' ) {
+            $author_role = $bio;
+        } else {
+            $roles = (array) $wp_user->roles;
+            $author_role = ! empty( $roles ) ? ucfirst( $roles[0] ) : '';
+        }
+    }
+
     return array(
         'id'             => $id,
         'slug'           => $post->post_name,
@@ -429,8 +446,8 @@ function tcca_article_payload( $post ) {
         'categories'     => $cats['list'],
         'read_minutes'   => (int) ( $fields['read_minutes'] ?? 3 ),
         'is_featured'    => (bool) ( $fields['is_featured'] ?? false ),
-        'author_display' => $fields['author_display'] ?? 'Newsroom',
-        'author_role'    => $fields['author_role'] ?? 'TCCA Official',
+        'author_display' => $author_display,
+        'author_role'    => $author_role,
         'cover'          => $cover,
         'cover_caption'  => $cover_caption,
         'og_image'       => tcca_acf_image( $fields['og_image'] ?? null ),
@@ -917,7 +934,7 @@ add_action( 'rest_api_init', function () {
         },
     ) );
 
-    // --- CATEGORIES list ----------------------------------
+    // --- CATEGORIES list + single -------------------------
     register_rest_route( $ns, '/categories', array(
         'methods' => 'GET', 'permission_callback' => '__return_true',
         'callback' => function () {
@@ -931,12 +948,40 @@ add_action( 'rest_api_init', function () {
             foreach ( $terms as $t ) {
                 if ( (int) $t->term_id === $default_id && strtolower( $t->slug ) === 'uncategorized' ) continue;
                 $out[] = array(
-                    'slug'  => $t->slug,
-                    'name'  => $t->name,
-                    'count' => (int) $t->count,
+                    'slug'        => $t->slug,
+                    'name'        => $t->name,
+                    'description' => $t->description,
+                    'count'       => (int) $t->count,
                 );
             }
             return $out;
+        },
+    ) );
+
+    register_rest_route( $ns, '/categories/(?P<slug>[a-zA-Z0-9-_]+)', array(
+        'methods' => 'GET', 'permission_callback' => '__return_true',
+        'callback' => function ( WP_REST_Request $req ) {
+            $slug = $req->get_param( 'slug' );
+            $term = get_term_by( 'slug', $slug, 'category' );
+            if ( ! $term ) {
+                return new WP_Error( 'tcca_not_found', 'Category not found', array( 'status' => 404 ) );
+            }
+            $posts = get_posts( array(
+                'post_type'     => 'post',
+                'numberposts'   => 50,
+                'category_name' => $slug,
+                'orderby'       => 'date',
+                'order'         => 'DESC',
+            ) );
+            return array(
+                'category' => array(
+                    'slug'        => $term->slug,
+                    'name'        => $term->name,
+                    'description' => $term->description,
+                    'count'       => (int) $term->count,
+                ),
+                'articles' => array_map( 'tcca_article_payload', $posts ),
+            );
         },
     ) );
 

@@ -43,7 +43,7 @@ export default async function TagsPage() {
               {sorted.map((t) => (
                 <Link
                   key={t.slug}
-                  href={`/tags/${t.slug}`}
+                  href={`/tag/${t.slug}`}
                   className="group inline-flex items-center gap-3 rounded-full border border-navy-600/15 bg-white px-5 py-2.5 text-sm font-semibold text-navy-700 shadow-sm transition hover:-translate-y-0.5 hover:border-orange-tcca/50 hover:bg-orange-soft hover:shadow-md"
                 >
                   <span className="text-orange-tcca">#</span>

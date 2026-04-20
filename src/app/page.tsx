@@ -10,17 +10,49 @@ import {
   getPartners,
   getPillars,
   getBootstrap,
+  getArticles,
   mergeCms,
   pickList,
+  type ArticleCms,
 } from "@/lib/cms";
 import { fbHome, fbBootstrap, fbPillars, fbPartners } from "@/lib/cms-fallback";
 
+/** Pick a card article: use the editor's ACF choice, otherwise find a post
+ *  whose category matches, otherwise fall back to the first remaining post. */
+function pickCard(
+  chosen: ArticleCms | null | undefined,
+  pool: ArticleCms[],
+  used: Set<number>,
+  matchCategory: string,
+): ArticleCms | null {
+  if (chosen) {
+    used.add(chosen.id);
+    return chosen;
+  }
+  const byCategory = pool.find(
+    (a) =>
+      !used.has(a.id) &&
+      (a.tag_label?.toLowerCase() === matchCategory.toLowerCase() ||
+        a.categories?.some(
+          (c) => c.slug.toLowerCase() === matchCategory.toLowerCase(),
+        )),
+  );
+  if (byCategory) {
+    used.add(byCategory.id);
+    return byCategory;
+  }
+  const fallback = pool.find((a) => !used.has(a.id));
+  if (fallback) used.add(fallback.id);
+  return fallback ?? null;
+}
+
 export default async function Home() {
-  const [home, pillars, partners, bootstrap] = await Promise.all([
+  const [home, pillars, partners, bootstrap, articles] = await Promise.all([
     getHome(),
     getPillars(),
     getPartners(),
     getBootstrap(),
+    getArticles({ limit: 12 }),
   ]);
 
   const h = mergeCms(home, fbHome);
@@ -47,6 +79,30 @@ export default async function Home() {
     (p) => !!(p.name?.trim() || p.logo?.url),
   );
 
+  // News section — prefer the editor's ACF choices on the Home page, then
+  // auto-fill missing slots from the latest WP posts so the homepage always
+  // has real content as soon as news is published, without manual picking.
+  const articlePool = articles ?? [];
+  const used = new Set<number>();
+  const featuredArticle =
+    h.news_section.featured_article ??
+    articlePool.find((a) => a.is_featured) ??
+    articlePool[0] ??
+    null;
+  if (featuredArticle) used.add(featuredArticle.id);
+  const insightArticle = pickCard(
+    h.news_section.insight_article,
+    articlePool,
+    used,
+    "insight",
+  );
+  const communityArticle = pickCard(
+    h.news_section.community_article,
+    articlePool,
+    used,
+    "community",
+  );
+
   const avatar =
     bootstrap?.identity.brand_avatar?.url ??
     fbBootstrap.identity.brand_avatar?.url;
@@ -64,9 +120,9 @@ export default async function Home() {
       />
       <News
         section={h.news_section}
-        featured={h.news_section.featured_article}
-        insight={h.news_section.insight_article}
-        community={h.news_section.community_article}
+        featured={featuredArticle}
+        insight={insightArticle}
+        community={communityArticle}
       />
       <Partners data={partnersData} />
       <JoinCTA data={h.join} />

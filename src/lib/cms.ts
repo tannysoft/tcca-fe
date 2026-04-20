@@ -145,8 +145,8 @@ export type ArticleCms = {
   og_image: CmsImage;
   /** Gutenberg-rendered HTML (post_content run through `the_content` filters). */
   body_html: string;
-  /** WP post_tag terms. */
-  hashtags: string[];
+  /** WP post_tag terms (slug + name). */
+  hashtags: { slug: string; name: string }[];
   toc: { id: string; label: string }[];
   related: {
     slug: string;
@@ -307,28 +307,76 @@ export type TagDetailCms = {
   articles: ArticleCms[];
 };
 
+export type CategoryCms = {
+  slug: string;
+  name: string;
+  description: string;
+  count: number;
+};
+
+export type CategoryDetailCms = {
+  category: CategoryCms;
+  articles: ArticleCms[];
+};
+
 export const getBootstrap = () => cmsFetch<Bootstrap>("/bootstrap");
 export const getHome = () => cmsFetch<HomeCms>("/home");
 export const getAbout = () => cmsFetch<AboutCms>("/about");
 export const getRegister = () => cmsFetch<RegisterCms>("/register");
 export const getPartners = () => cmsFetch<PartnersCms>("/partners");
 export const getPillars = () => cmsFetch<PillarCms[]>("/pillars");
-export const getArticles = (
+function slugifyName(s: string): string {
+  return (
+    s
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\u0e00-\u0e7f\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .slice(0, 80) || "tag"
+  );
+}
+
+/** Coerce an article payload to the current frontend type — handles older
+ *  plugin versions that returned `hashtags: string[]` before the upgrade. */
+function normalizeArticle(a: ArticleCms): ArticleCms {
+  type LegacyHashtag = string | { slug: string; name: string };
+  const raw = a as unknown as ArticleCms & { hashtags: LegacyHashtag[] };
+  const hashtags = (raw.hashtags ?? []).map((t) =>
+    typeof t === "string" ? { slug: slugifyName(t), name: t } : t,
+  );
+  return { ...a, hashtags };
+}
+
+export const getArticles = async (
   opts: { limit?: number; tag?: string; category?: string } = {},
 ) => {
   const p = new URLSearchParams();
   p.set("limit", String(opts.limit ?? 20));
   if (opts.tag) p.set("tag", opts.tag);
   if (opts.category) p.set("category", opts.category);
-  return cmsFetch<ArticleCms[]>(`/articles?${p.toString()}`);
+  const list = await cmsFetch<ArticleCms[]>(`/articles?${p.toString()}`);
+  return list ? list.map(normalizeArticle) : null;
 };
-export const getArticle = (slug: string) =>
-  cmsFetch<ArticleCms>(`/articles/${encodeURIComponent(slug)}`);
+export const getArticle = async (slug: string) => {
+  const a = await cmsFetch<ArticleCms>(
+    `/articles/${encodeURIComponent(slug)}`,
+  );
+  return a ? normalizeArticle(a) : null;
+};
 export const getEvents = (limit = 20) =>
   cmsFetch<EventCms[]>(`/events?limit=${limit}`);
 export const getTags = () => cmsFetch<TagCms[]>("/tags");
-export const getTag = (slug: string) =>
-  cmsFetch<TagDetailCms>(`/tags/${encodeURIComponent(slug)}`);
+export const getTag = async (slug: string) => {
+  const d = await cmsFetch<TagDetailCms>(`/tags/${encodeURIComponent(slug)}`);
+  return d ? { ...d, articles: d.articles.map(normalizeArticle) } : null;
+};
+export const getCategories = () => cmsFetch<CategoryCms[]>("/categories");
+export const getCategory = async (slug: string) => {
+  const d = await cmsFetch<CategoryDetailCms>(
+    `/categories/${encodeURIComponent(slug)}`,
+  );
+  return d ? { ...d, articles: d.articles.map(normalizeArticle) } : null;
+};
 
 /* -----------------------------------------------------------
  * Helpers for fallback-aware rendering.
@@ -372,6 +420,68 @@ function isEmpty(v: unknown): boolean {
     return Object.keys(obj).length === 0;
   }
   return false;
+}
+
+/**
+ * Build a table of contents from a Gutenberg-rendered article body by
+ * scanning for `<h2>` headings. Injects an `id` attribute on headings that
+ * don't already have one (slugified from the heading text) so the TOC links
+ * anchor to the right position, and returns the rewritten HTML alongside the
+ * list of TOC items.
+ */
+function slugifyHeading(text: string): string {
+  const cleaned = text
+    .replace(/<[^>]+>/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0e00-\u0e7f\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .slice(0, 80);
+  return cleaned || "section";
+}
+
+export function prepareArticleBody(html: string): {
+  html: string;
+  toc: { id: string; label: string }[];
+} {
+  if (!html) return { html, toc: [] };
+  const toc: { id: string; label: string }[] = [];
+  const used = new Set<string>();
+
+  let rewritten = html.replace(
+    /<h2([^>]*)>([\s\S]*?)<\/h2>/gi,
+    (_full, attrs: string, inner: string) => {
+      const text = inner.replace(/<[^>]+>/g, "").trim();
+      if (!text) return `<h2${attrs}>${inner}</h2>`;
+      const existingId = /\bid=["']([^"']+)["']/.exec(attrs)?.[1];
+      let id = existingId ?? "";
+      if (!id) {
+        const base = slugifyHeading(text);
+        id = base;
+        let n = 1;
+        while (used.has(id)) id = `${base}-${++n}`;
+      }
+      used.add(id);
+      toc.push({ id, label: text });
+      const nextAttrs = existingId ? attrs : attrs + ` id="${id}"`;
+      return `<h2${nextAttrs}>${inner}</h2>`;
+    },
+  );
+
+  // Inject a decorative opening quote mark inside every <blockquote>.
+  // Gutenberg's default blockquote has the shape:
+  //   <blockquote class="wp-block-quote"><p>…</p><cite>…</cite></blockquote>
+  // We prepend an absolutely-positioned span so the pull-quote card can
+  // display a big "\u201C" without relying on Tailwind's arbitrary-content
+  // unicode escapes (which render literally as "\\u201C").
+  const quoteMark =
+    '<span aria-hidden="true" class="tcca-quote-mark">\u201C</span>';
+  rewritten = rewritten.replace(
+    /<blockquote([^>]*)>/gi,
+    (_m, attrs: string) => `<blockquote${attrs}>${quoteMark}`,
+  );
+
+  return { html: rewritten, toc };
 }
 
 /**
