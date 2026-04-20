@@ -1,11 +1,19 @@
 import Link from "next/link";
-import type { ArticleCms } from "@/lib/cms";
+import { prepareArticleBody, type ArticleCms } from "@/lib/cms";
 
 const FALLBACK_COVER = "/news/press-conference.jpg";
 
 export function ArticleView({ article }: { article: ArticleCms }) {
   const cover = article.cover?.url ?? FALLBACK_COVER;
   const hasBody = Boolean(article.body_html && article.body_html.trim());
+  const { html: bodyHtml, toc: autoToc } = prepareArticleBody(
+    article.body_html ?? "",
+  );
+  const toc = article.toc.length ? article.toc : autoToc;
+  const authorDisplay = article.author_display?.trim() || "Newsroom";
+  const authorRole = article.author_role?.trim() || "TCCA Official";
+  const primaryCategory = article.categories?.[0] ?? null;
+  const validAttachments = article.attachments.filter((a) => a.file);
 
   return (
     <>
@@ -31,17 +39,27 @@ export function ArticleView({ article }: { article: ArticleCms }) {
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {article.tag_label && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white">
-                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                {article.tag_label}
-              </span>
+              primaryCategory ? (
+                <Link
+                  href={`/category/${primaryCategory.slug}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white transition hover:bg-orange-light"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                  {article.tag_label}
+                </Link>
+              ) : (
+                <span className="inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                  {article.tag_label}
+                </span>
+              )
             )}
             <span className="text-xs font-semibold uppercase tracking-[0.22em] text-navy-600/60">
               {article.date_th} · {article.read_minutes} min read
             </span>
           </div>
 
-          <h1 className="mt-6 max-w-4xl text-balance font-display text-5xl font-bold !leading-[1.02] tracking-tight text-navy-700 md:text-7xl">
+          <h1 className="mt-6 text-balance font-display text-5xl font-bold !leading-[1.02] tracking-tight text-navy-700 md:text-7xl">
             {article.title}
           </h1>
 
@@ -52,9 +70,9 @@ export function ArticleView({ article }: { article: ArticleCms }) {
               </span>
               <span>
                 <span className="block font-semibold text-navy-700">
-                  {article.author_display}
+                  {authorDisplay}
                 </span>
-                <span className="block text-xs">{article.author_role}</span>
+                <span className="block text-xs">{authorRole}</span>
               </span>
             </span>
           </div>
@@ -80,7 +98,7 @@ export function ArticleView({ article }: { article: ArticleCms }) {
       </section>
 
       <section className="relative py-16 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-[1fr_260px] md:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-[1fr_280px] md:px-8">
           <article className="prose-article space-y-8 text-lg leading-relaxed text-navy-700/90">
             {article.subtitle && (
               <p className="text-xl font-semibold text-navy-700">
@@ -90,8 +108,23 @@ export function ArticleView({ article }: { article: ArticleCms }) {
 
             {hasBody ? (
               <div
-                className="tcca-gutenberg space-y-6 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:!leading-[1.1] [&_h2]:text-navy-700 [&_h2]:mt-10 md:[&_h2]:text-4xl [&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-navy-700 [&_h3]:mt-8 [&_p]:text-lg [&_p]:leading-relaxed [&_strong]:font-semibold [&_strong]:text-navy-700 [&_a]:text-orange-tcca [&_a]:underline [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_blockquote]:border-l-4 [&_blockquote]:border-orange-tcca [&_blockquote]:bg-white/60 [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:rounded-r-2xl [&_figure]:my-8 [&_figure_img]:rounded-2xl [&_figcaption]:mt-2 [&_figcaption]:text-sm [&_figcaption]:text-navy-600/70 [&_img]:rounded-2xl"
-                dangerouslySetInnerHTML={{ __html: article.body_html }}
+                className="tcca-gutenberg space-y-6
+                  [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:!leading-[1.1] [&_h2]:text-navy-700 [&_h2]:mt-10 [&_h2]:scroll-mt-28 md:[&_h2]:text-4xl
+                  [&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-navy-700 [&_h3]:mt-8 [&_h3]:scroll-mt-28
+                  [&_p]:text-lg [&_p]:leading-relaxed
+                  [&_strong]:font-semibold [&_strong]:text-navy-700
+                  [&_a]:text-orange-tcca [&_a]:underline
+                  [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2
+                  [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2
+                  [&_figure]:my-8 [&_figure_img]:rounded-2xl
+                  [&_figcaption]:mt-2 [&_figcaption]:text-sm [&_figcaption]:text-navy-600/70
+                  [&_img]:rounded-2xl
+                  [&_blockquote]:relative [&_blockquote]:my-10 [&_blockquote]:overflow-hidden [&_blockquote]:rounded-3xl [&_blockquote]:bg-navy-700 [&_blockquote]:px-8 [&_blockquote]:py-10 [&_blockquote]:text-cream [&_blockquote]:shadow-xl md:[&_blockquote]:px-12 md:[&_blockquote]:py-12
+                  [&_blockquote>p]:relative [&_blockquote>p]:font-display [&_blockquote>p]:text-2xl [&_blockquote>p]:font-semibold [&_blockquote>p]:!leading-[1.25] [&_blockquote>p]:text-cream md:[&_blockquote>p]:text-3xl
+                  [&_blockquote_cite]:relative [&_blockquote_cite]:mt-6 [&_blockquote_cite]:not-italic [&_blockquote_cite]:flex [&_blockquote_cite]:items-center [&_blockquote_cite]:gap-3 [&_blockquote_cite]:text-sm [&_blockquote_cite]:font-semibold [&_blockquote_cite]:uppercase [&_blockquote_cite]:tracking-[0.2em] [&_blockquote_cite]:text-cream/70
+                  [&_blockquote_cite]:before:inline-block [&_blockquote_cite]:before:h-px [&_blockquote_cite]:before:w-10 [&_blockquote_cite]:before:bg-orange-tcca
+                  [&_.tcca-quote-mark]:pointer-events-none [&_.tcca-quote-mark]:absolute [&_.tcca-quote-mark]:-top-4 [&_.tcca-quote-mark]:right-4 [&_.tcca-quote-mark]:font-display [&_.tcca-quote-mark]:text-[160px] [&_.tcca-quote-mark]:!leading-none [&_.tcca-quote-mark]:text-cream/10 md:[&_.tcca-quote-mark]:text-[220px]"
+                dangerouslySetInnerHTML={{ __html: bodyHtml }}
               />
             ) : article.excerpt ? (
               <p className="text-xl font-semibold text-navy-700">
@@ -103,91 +136,167 @@ export function ArticleView({ article }: { article: ArticleCms }) {
               </p>
             )}
 
-            {article.attachments.length > 0 && (
+            {validAttachments.length > 0 && (
               <div className="rounded-3xl border border-navy-600/10 bg-white/70 p-6">
                 <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-orange-tcca">
                   ดาวน์โหลดเอกสาร
                 </p>
                 <ul className="mt-4 space-y-2">
-                  {article.attachments.map((a, i) =>
-                    a.file ? (
-                      <li key={i}>
-                        <a
-                          href={a.file.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-display inline-flex items-center gap-2 text-sm font-semibold text-navy-700 hover:text-orange-tcca"
-                        >
-                          <span aria-hidden>↓</span>
-                          {a.label || a.file.filename}
-                        </a>
-                      </li>
-                    ) : null,
-                  )}
+                  {validAttachments.map((a, i) => (
+                    <li key={i}>
+                      <a
+                        href={a.file!.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-display inline-flex items-center gap-2 text-sm font-semibold text-navy-700 hover:text-orange-tcca"
+                      >
+                        <span aria-hidden>↓</span>
+                        {a.label || a.file!.filename}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
 
-            {article.hashtags.length > 0 && (
-              <div className="flex flex-wrap gap-2 border-t border-navy-600/10 pt-10">
-                {article.hashtags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-navy-700 ring-1 ring-navy-600/10"
-                  >
-                    #{t}
-                  </span>
-                ))}
+            {(article.categories.length > 0 || article.hashtags.length > 0) && (
+              <div className="border-t border-navy-600/10 pt-10">
+                {article.categories.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-navy-600/60">
+                      หมวดหมู่
+                    </span>
+                    {article.categories.map((c) => (
+                      <Link
+                        key={c.slug}
+                        href={`/category/${c.slug}`}
+                        className="inline-flex items-center rounded-full bg-navy-700 px-3.5 py-1.5 text-xs font-semibold text-cream transition hover:bg-orange-tcca"
+                      >
+                        {c.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+                {article.hashtags.length > 0 && (
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-navy-600/60">
+                      แท็ก
+                    </span>
+                    {article.hashtags.map((t) => (
+                      <Link
+                        key={t.slug}
+                        href={`/tag/${t.slug}`}
+                        className="inline-flex items-center rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-navy-700 ring-1 ring-navy-600/10 transition hover:bg-orange-soft hover:text-orange-tcca hover:ring-orange-tcca/40"
+                      >
+                        <span aria-hidden className="mr-0.5 text-orange-tcca">#</span>
+                        {t.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </article>
 
           <aside className="relative">
             <div className="sticky top-28 space-y-4">
-              {article.toc.length > 0 && (
-                <div className="rounded-3xl border border-navy-600/10 bg-white/70 p-5 backdrop-blur">
-                  <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-tcca">
-                    On this page
-                  </p>
-                  <ul className="mt-4 space-y-2 text-sm">
-                    {article.toc.map((t) => (
-                      <li key={t.id}>
+              {toc.length > 0 && (
+                <nav
+                  aria-label="On this page"
+                  className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-navy-600/10"
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 top-0 h-1 brand-gradient"
+                  />
+                  <div className="flex items-center gap-2">
+                    <span
+                      aria-hidden
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-orange-soft text-orange-tcca"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5"
+                        fill="currentColor"
+                      >
+                        <path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h10v2H4z" />
+                      </svg>
+                    </span>
+                    <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-tcca">
+                      On this page
+                    </p>
+                  </div>
+                  <ol className="mt-5 space-y-1 text-sm">
+                    {toc.map((t, i) => (
+                      <li key={t.id} className="group">
                         <a
                           href={`#${t.id}`}
-                          className="font-display flex items-center gap-2 rounded-full px-3 py-2 text-navy-700 transition hover:bg-orange-soft"
+                          className="relative flex items-start gap-3 rounded-xl px-3 py-2.5 text-navy-700 transition hover:bg-orange-soft"
                         >
                           <span
                             aria-hidden
-                            className="h-1.5 w-1.5 rounded-full bg-orange-tcca"
-                          />
-                          {t.label}
+                            className="mt-0.5 font-mono text-[11px] font-bold text-orange-tcca/70 group-hover:text-orange-tcca"
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span className="font-display font-medium leading-snug">
+                            {t.label}
+                          </span>
                         </a>
                       </li>
                     ))}
-                  </ul>
-                </div>
+                  </ol>
+                </nav>
               )}
 
-              <div className="rounded-3xl bg-navy-700 p-5 text-cream">
-                <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-light">
-                  Newsletter
+              <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-navy-600/10">
+                <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-tcca">
+                  Share
                 </p>
-                <p className="mt-3 font-display text-lg font-bold !leading-[1.1]">
-                  รับสรุปข่าวสารและ Insight ของวงการทุกสัปดาห์
-                </p>
-                <form className="mt-4 flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="you@example.com"
-                    className="flex-1 rounded-full bg-cream/10 px-4 py-2.5 text-sm text-cream placeholder-cream/50 ring-1 ring-cream/20 focus:outline-none focus:ring-orange-tcca"
-                  />
-                  <button
-                    type="button"
-                    className="font-display inline-flex items-center justify-center rounded-full bg-orange-tcca px-4 text-sm font-semibold text-white"
-                  >
-                    →
-                  </button>
-                </form>
+                <div className="mt-4 grid grid-cols-4 gap-2">
+                  <ShareButton label="X" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}`} />
+                  <ShareButton label="FB" href="#" />
+                  <ShareButton label="LN" href="#" />
+                  <ShareButton label="IG" href="#" />
+                </div>
+              </div>
+
+              <div className="relative overflow-hidden rounded-3xl bg-navy-700 p-6 text-cream shadow-xl">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-orange-tcca/40 blur-2xl"
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 dot-grid-light opacity-20"
+                />
+                <div className="relative">
+                  <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-light">
+                    Newsletter
+                  </p>
+                  <p className="mt-3 font-display text-lg font-bold !leading-[1.15]">
+                    รับสรุปข่าวสารและ Insight ของวงการทุกสัปดาห์
+                  </p>
+                  <form className="mt-5 space-y-2">
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      className="w-full rounded-full bg-cream/10 px-4 py-2.5 text-sm text-cream placeholder-cream/50 ring-1 ring-cream/20 focus:outline-none focus:ring-orange-tcca"
+                    />
+                    <button
+                      type="button"
+                      className="font-display group inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-orange-tcca text-sm font-semibold text-white transition hover:bg-orange-light"
+                    >
+                      สมัครรับข่าวสาร
+                      <span
+                        aria-hidden
+                        className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:rotate-45"
+                      >
+                        ↗
+                      </span>
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </aside>
@@ -223,9 +332,11 @@ export function ArticleView({ article }: { article: ArticleCms }) {
                       alt={r.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     />
-                    <span className="absolute left-4 top-4 rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream">
-                      {r.tag_label}
-                    </span>
+                    {r.tag_label && (
+                      <span className="absolute left-4 top-4 rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream">
+                        {r.tag_label}
+                      </span>
+                    )}
                   </div>
                   <div className="p-6">
                     <h3 className="font-display text-lg font-bold !leading-[1.15] text-navy-700">
@@ -240,5 +351,19 @@ export function ArticleView({ article }: { article: ArticleCms }) {
         </section>
       )}
     </>
+  );
+}
+
+function ShareButton({ label, href }: { label: string; href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Share on ${label}`}
+      className="font-display inline-flex h-10 items-center justify-center rounded-xl border border-navy-600/10 bg-cream/40 text-xs font-bold text-navy-700 transition hover:border-orange-tcca/40 hover:bg-orange-soft hover:text-orange-tcca"
+    >
+      {label}
+    </a>
   );
 }

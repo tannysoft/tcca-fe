@@ -129,10 +129,10 @@ function ArticleCard({ data, idx }: { data: ArticleCms; idx: number }) {
           <div className="mt-4 flex flex-wrap gap-1.5">
             {data.hashtags.slice(0, 3).map((t) => (
               <span
-                key={t}
+                key={t.slug}
                 className="rounded-full bg-orange-soft px-2.5 py-0.5 text-[10px] font-semibold text-orange-tcca"
               >
-                #{t}
+                #{t.name}
               </span>
             ))}
           </div>

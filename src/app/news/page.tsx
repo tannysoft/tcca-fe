@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
-import { getArticles, type ArticleCms } from "@/lib/cms";
+import { getArticles, getCategories, type ArticleCms } from "@/lib/cms";
 import { fbArticles } from "@/lib/cms-fallback";
 
 export const metadata: Metadata = {
@@ -10,16 +10,6 @@ export const metadata: Metadata = {
     "ข่าวสาร แถลงการณ์ และบทความล่าสุดจาก TCCA — สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย",
 };
 
-const TAG_OPTIONS = [
-  "ทั้งหมด",
-  "แถลงการณ์",
-  "Insight",
-  "Community",
-  "Events",
-  "Policy",
-  "Education",
-] as const;
-
 const FALLBACK_COVERS = [
   "/news/press-conference.jpg",
   "/news/agenda.jpg",
@@ -27,9 +17,13 @@ const FALLBACK_COVERS = [
 ];
 
 export default async function NewsPage() {
-  const cmsArticles = await getArticles({ limit: 50 });
+  const [cmsArticles, categories] = await Promise.all([
+    getArticles({ limit: 50 }),
+    getCategories(),
+  ]);
   const articles = cmsArticles && cmsArticles.length ? cmsArticles : fbArticles;
   const [featured, ...rest] = articles;
+  const cats = (categories ?? []).sort((a, b) => b.count - a.count);
 
   return (
     <>
@@ -55,18 +49,23 @@ export default async function NewsPage() {
             <span className="font-display text-sm font-semibold text-navy-700">
               หมวด:
             </span>
-            {TAG_OPTIONS.map((t, i) => (
-              <button
-                key={t}
-                type="button"
-                className={`font-display rounded-full px-4 py-1.5 text-sm font-medium transition ${
-                  i === 0
-                    ? "bg-navy-700 text-cream"
-                    : "border border-navy-600/15 bg-white text-navy-700 hover:border-navy-600/40"
-                }`}
+            <Link
+              href="/news"
+              className="font-display rounded-full bg-navy-700 px-4 py-1.5 text-sm font-medium text-cream"
+            >
+              ทั้งหมด
+            </Link>
+            {cats.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/category/${c.slug}`}
+                className="font-display inline-flex items-center gap-1.5 rounded-full border border-navy-600/15 bg-white px-4 py-1.5 text-sm font-medium text-navy-700 transition hover:border-orange-tcca/40 hover:text-orange-tcca"
               >
-                {t}
-              </button>
+                {c.name}
+                <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-navy-700/10 px-1.5 text-[10px] font-bold">
+                  {c.count}
+                </span>
+              </Link>
             ))}
             <Link
               href="/tags"

@@ -45,6 +45,7 @@ export const fbBootstrap: Bootstrap = {
       { href: "/#pillars", label: "พันธกิจ" },
       { href: "/#events", label: "กิจกรรม" },
       { href: "/news", label: "ข่าวสาร" },
+      { href: "/categories", label: "หมวดหมู่" },
       { href: "/tags", label: "แท็ก" },
       { href: "/#partners", label: "เครือข่าย" },
     ],
