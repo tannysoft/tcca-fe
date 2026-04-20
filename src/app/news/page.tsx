@@ -1,106 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { getArticles, type ArticleCms } from "@/lib/cms";
+import { fbArticles } from "@/lib/cms-fallback";
 
 export const metadata: Metadata = {
   title: "ข่าวสาร & บทความ",
   description:
     "ข่าวสาร แถลงการณ์ และบทความล่าสุดจาก TCCA — สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย",
 };
-
-const articles = [
-  {
-    slug: "tcca-launch-2026",
-    tag: "แถลงการณ์",
-    title:
-      "TCCA เปิดตัวอย่างเป็นทางการ พร้อมประกาศวิสัยทัศน์ยกระดับวงการครีเอเตอร์ไทย",
-    excerpt:
-      "สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทยเปิดตัวอย่างเป็นทางการ ณ SCBX Next Tech พร้อมเวทีเสวนาพิเศษโดยผู้นำอุตสาหกรรม",
-    date: "27 เม.ย. 2569",
-    readMinutes: 4,
-    cover: "/news/press-conference.jpg",
-  },
-  {
-    slug: "creator-economy-report-2026",
-    tag: "Insight",
-    title: "Creator Economy Thailand Report 2026 — โตอย่างไร โตไปทางไหน",
-    excerpt:
-      "รายงานข้อมูลเชิงลึกฉบับแรกของ TCCA พร้อมตัวเลขสำคัญที่แบรนด์และครีเอเตอร์ต้องรู้ในปีนี้",
-    date: "10 เม.ย. 2569",
-    readMinutes: 8,
-    cover: "/news/agenda.jpg",
-  },
-  {
-    slug: "founding-members-1000",
-    tag: "Community",
-    title: "เปิดรับสมาชิกรุ่นก่อตั้ง 1,000 คนแรก",
-    excerpt:
-      "Workshop ฟรีตลอดปีแรก เครือข่ายพาร์ทเนอร์ และสิทธิพิเศษอีกมากมายสำหรับครีเอเตอร์ที่เข้าร่วมในรอบก่อตั้ง",
-    date: "01 เม.ย. 2569",
-    readMinutes: 3,
-    cover: "/news/invite.jpg",
-  },
-  {
-    slug: "creator-summit-2026",
-    tag: "Events",
-    title: "Thailand Creator Summit 2026 เตรียมจัดเดือนกรกฎาคม",
-    excerpt:
-      "เวทีรวมครีเอเตอร์ แบรนด์ และแพลตฟอร์มชั้นนำของไทย พร้อมประกาศ Speaker Lineup ในเร็วๆ นี้",
-    date: "22 มี.ค. 2569",
-    readMinutes: 5,
-    cover: "/news/press-conference.jpg",
-  },
-  {
-    slug: "creator-standards-draft",
-    tag: "Policy",
-    title: "ร่างมาตรฐานวิชาชีพครีเอเตอร์ไทย ฉบับที่ 1",
-    excerpt:
-      "TCCA เปิดร่างมาตรฐานวิชาชีพให้สมาชิกร่วมเสนอความเห็น ก่อนประกาศใช้เป็นแนวทางอ้างอิงของวงการ",
-    date: "14 มี.ค. 2569",
-    readMinutes: 6,
-    cover: "/news/agenda.jpg",
-  },
-  {
-    slug: "brand-match-program",
-    tag: "Program",
-    title: "เปิดตัว TCCA Match — ระบบจับคู่ครีเอเตอร์กับแบรนด์",
-    excerpt:
-      "แพลตฟอร์มภายในสำหรับสมาชิก ช่วยจับคู่งานและพาร์ทเนอร์ที่ตรงกับสไตล์และผู้ติดตามของคุณ",
-    date: "02 มี.ค. 2569",
-    readMinutes: 4,
-    cover: "/news/invite.jpg",
-  },
-  {
-    slug: "masterclass-series-launch",
-    tag: "Education",
-    title: "Masterclass Series ซีซันแรก เปิดให้สมาชิกลงทะเบียนแล้ว",
-    excerpt:
-      "8 คลาสจากผู้นำอุตสาหกรรม ครอบคลุมตั้งแต่ Storytelling, Brand Deal ไปจนถึง Tax & Legal สำหรับครีเอเตอร์",
-    date: "20 ก.พ. 2569",
-    readMinutes: 5,
-    cover: "/news/press-conference.jpg",
-  },
-  {
-    slug: "advisory-board-announcement",
-    tag: "แถลงการณ์",
-    title: "ประกาศคณะที่ปรึกษาสมาคม ชุดก่อตั้ง",
-    excerpt:
-      "8 ผู้นำจากวงการสื่อ เอเจนซี่ และแพลตฟอร์มดิจิทัล เข้าร่วมเป็นที่ปรึกษาของ TCCA",
-    date: "12 ก.พ. 2569",
-    readMinutes: 3,
-    cover: "/news/agenda.jpg",
-  },
-  {
-    slug: "research-call-2026",
-    tag: "Insight",
-    title: "เปิดรับงานวิจัยร่วม Creator Economy 2026",
-    excerpt:
-      "TCCA ร่วมกับมหาวิทยาลัยพันธมิตร เปิดรับโจทย์วิจัยเชิงลึกเกี่ยวกับเศรษฐกิจครีเอเตอร์ไทย",
-    date: "01 ก.พ. 2569",
-    readMinutes: 4,
-    cover: "/news/invite.jpg",
-  },
-];
 
 const TAG_OPTIONS = [
   "ทั้งหมด",
@@ -112,7 +20,15 @@ const TAG_OPTIONS = [
   "Education",
 ] as const;
 
-export default function NewsPage() {
+const FALLBACK_COVERS = [
+  "/news/press-conference.jpg",
+  "/news/agenda.jpg",
+  "/news/invite.jpg",
+];
+
+export default async function NewsPage() {
+  const cmsArticles = await getArticles({ limit: 50 });
+  const articles = cmsArticles && cmsArticles.length ? cmsArticles : fbArticles;
   const [featured, ...rest] = articles;
 
   return (
@@ -133,7 +49,6 @@ export default function NewsPage() {
         description="ติดตามแถลงการณ์ บทความเชิงลึก และความเคลื่อนไหวล่าสุดของ TCCA — สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย"
       />
 
-      {/* FILTER */}
       <section className="relative pb-6">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="flex flex-wrap items-center gap-2">
@@ -153,18 +68,23 @@ export default function NewsPage() {
                 {t}
               </button>
             ))}
+            <Link
+              href="/tags"
+              className="font-display ml-auto inline-flex items-center gap-1.5 rounded-full border border-orange-tcca/40 bg-orange-soft px-4 py-1.5 text-sm font-semibold text-orange-tcca transition hover:bg-orange-tcca hover:text-white"
+            >
+              <span aria-hidden>#</span>
+              ดูแท็กทั้งหมด →
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* FEATURED */}
       <section className="relative pt-6 pb-12">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <FeaturedArticle data={featured} />
         </div>
       </section>
 
-      {/* GRID */}
       <section className="relative pb-24 md:pb-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="flex items-end justify-between">
@@ -177,24 +97,9 @@ export default function NewsPage() {
           </div>
 
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {rest.map((a) => (
-              <ArticleCard key={a.slug} data={a} />
+            {rest.map((a, i) => (
+              <ArticleCard key={a.slug || i} data={a} idx={i} />
             ))}
-          </div>
-
-          <div className="mt-12 flex justify-center">
-            <button
-              type="button"
-              className="font-display group inline-flex h-12 items-center gap-2 rounded-full border border-navy-600/15 bg-white px-6 text-base font-semibold text-navy-700 transition hover:border-navy-600/40 hover:bg-cream"
-            >
-              โหลดเพิ่ม
-              <span
-                aria-hidden
-                className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-navy-700 text-cream transition-transform duration-300 group-hover:translate-y-0.5"
-              >
-                ↓
-              </span>
-            </button>
           </div>
         </div>
       </section>
@@ -202,19 +107,22 @@ export default function NewsPage() {
   );
 }
 
-type Article = (typeof articles)[number];
+function articleHref(a: ArticleCms) {
+  return a.slug ? `/news/${a.slug}` : "/detail";
+}
 
-function FeaturedArticle({ data }: { data: Article }) {
+function FeaturedArticle({ data }: { data: ArticleCms }) {
+  const cover = data.cover?.url ?? FALLBACK_COVERS[0];
   return (
     <Link
-      href="/detail"
+      href={articleHref(data)}
       className="group relative grid overflow-hidden rounded-[2.5rem] bg-navy-700 text-cream shadow-xl ring-1 ring-navy-600/10 md:grid-cols-[1.1fr_1fr]"
     >
       <div className="relative aspect-[16/10] overflow-hidden md:aspect-auto">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data.cover}
-          alt={data.title}
+          src={cover}
+          alt={data.cover?.alt || data.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
         <div
@@ -227,7 +135,7 @@ function FeaturedArticle({ data }: { data: Article }) {
         />
         <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-orange-tcca px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-white shadow-lg">
           <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-          Featured · {data.tag}
+          Featured · {data.tag_label}
         </span>
       </div>
 
@@ -243,11 +151,11 @@ function FeaturedArticle({ data }: { data: Article }) {
         <div className="relative">
           <div className="flex items-center gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
-              {data.date}
+              {data.date_th}
             </span>
             <span aria-hidden className="h-px flex-1 bg-cream/15" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cream/60">
-              {data.readMinutes} min read
+              {data.read_minutes} min read
             </span>
           </div>
           <h3 className="mt-6 font-display text-3xl font-bold !leading-[1.05] text-cream md:text-[40px]">
@@ -274,21 +182,22 @@ function FeaturedArticle({ data }: { data: Article }) {
   );
 }
 
-function ArticleCard({ data }: { data: Article }) {
+function ArticleCard({ data, idx }: { data: ArticleCms; idx: number }) {
+  const cover = data.cover?.url ?? FALLBACK_COVERS[idx % FALLBACK_COVERS.length];
   return (
     <Link
-      href="/detail"
+      href={articleHref(data)}
       className="group flex flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-sm ring-1 ring-navy-600/10 transition-all hover:-translate-y-1 hover:shadow-lg hover:ring-orange-tcca/40"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={data.cover}
-          alt={data.title}
+          src={cover}
+          alt={data.cover?.alt || data.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
         />
         <span className="absolute left-4 top-4 rounded-full bg-navy-700/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream backdrop-blur">
-          {data.tag}
+          {data.tag_label}
         </span>
       </div>
       <div className="flex flex-1 flex-col p-6">
@@ -299,7 +208,7 @@ function ArticleCard({ data }: { data: Article }) {
           {data.excerpt}
         </p>
         <div className="mt-auto flex items-center justify-between pt-6 text-xs">
-          <span className="font-semibold text-navy-600/60">{data.date}</span>
+          <span className="font-semibold text-navy-600/60">{data.date_th}</span>
           <span className="font-display inline-flex items-center gap-1 text-navy-700 transition-transform group-hover:translate-x-0.5">
             อ่านต่อ
             <span aria-hidden>→</span>
@@ -309,4 +218,3 @@ function ArticleCard({ data }: { data: Article }) {
     </Link>
   );
 }
-

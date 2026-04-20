@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import type { Bootstrap } from "@/lib/cms";
 
 const iconClass = "h-[18px] w-[18px]";
 
@@ -10,7 +11,6 @@ function FacebookIcon() {
     </svg>
   );
 }
-
 function InstagramIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={iconClass} aria-hidden>
@@ -20,7 +20,6 @@ function InstagramIcon() {
     </svg>
   );
 }
-
 function TikTokIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden>
@@ -28,7 +27,6 @@ function TikTokIcon() {
     </svg>
   );
 }
-
 function YouTubeIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden>
@@ -36,7 +34,6 @@ function YouTubeIcon() {
     </svg>
   );
 }
-
 function XIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden>
@@ -44,7 +41,6 @@ function XIcon() {
     </svg>
   );
 }
-
 function LineIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={iconClass} aria-hidden>
@@ -53,16 +49,35 @@ function LineIcon() {
   );
 }
 
-const SOCIALS = [
-  { label: "Facebook", href: "#", Icon: FacebookIcon },
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "TikTok", href: "#", Icon: TikTokIcon },
-  { label: "YouTube", href: "#", Icon: YouTubeIcon },
-  { label: "X", href: "#", Icon: XIcon },
-  { label: "LINE", href: "#", Icon: LineIcon },
-] as const;
+const ICONS: Record<string, () => React.JSX.Element> = {
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  tiktok: TikTokIcon,
+  youtube: YouTubeIcon,
+  x: XIcon,
+  line: LineIcon,
+};
 
-export function Footer() {
+export function Footer({
+  identity,
+  footer,
+}: {
+  identity: Bootstrap["identity"];
+  footer: Bootstrap["footer"];
+}) {
+  const year = new Date().getFullYear();
+  const copyright = (footer.copyright || "").replace("{year}", String(year));
+  const socials = identity.socials.length
+    ? identity.socials
+    : [
+        { platform: "facebook", label: "Facebook", url: "#" },
+        { platform: "instagram", label: "Instagram", url: "#" },
+        { platform: "tiktok", label: "TikTok", url: "#" },
+        { platform: "youtube", label: "YouTube", url: "#" },
+        { platform: "x", label: "X", url: "#" },
+        { platform: "line", label: "LINE", url: "#" },
+      ];
+
   return (
     <footer className="relative isolate overflow-hidden bg-navy-700 text-cream/90">
       <div aria-hidden className="absolute inset-0 dot-grid-light opacity-40" />
@@ -76,91 +91,56 @@ export function Footer() {
           <div>
             <Logo variant="white" height={56} />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
-              สมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย — รวมพลังคอนเทนต์ครีเอเตอร์
-              อินฟลูเอนเซอร์ และนักขายออนไลน์ เพื่อยกระดับวงการสื่อสร้างสรรค์ของไทย
-              สู่มาตรฐานวิชาชีพระดับสากล
+              {footer.description}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              {SOCIALS.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  aria-label={s.label}
-                  title={s.label}
-                  className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 text-cream/80 transition hover:border-orange-tcca hover:bg-orange-tcca hover:text-white"
-                >
-                  <s.Icon />
-                </a>
-              ))}
+              {socials.map((s) => {
+                const Icon = ICONS[s.platform] ?? FacebookIcon;
+                return (
+                  <a
+                    key={s.platform + s.url}
+                    href={s.url || "#"}
+                    aria-label={s.label}
+                    title={s.label}
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 text-cream/80 transition hover:border-orange-tcca hover:bg-orange-tcca hover:text-white"
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
-          <FooterCol
-            title="เกี่ยวกับ"
-            items={[
-              ["วิสัยทัศน์และพันธกิจ", "#about"],
-              ["คณะกรรมการ", "#committee"],
-              ["สมัครสมาชิก", "#join"],
-              ["ร่วมงานกับเรา", "#careers"],
-            ]}
-          />
-          <FooterCol
-            title="กิจกรรม"
-            items={[
-              ["ข่าวสาร & แถลงการณ์", "#news"],
-              ["งานอีเวนต์", "#events"],
-              ["โครงการฝึกอบรม", "#programs"],
-              ["Thailand Creator Awards", "#awards"],
-            ]}
-          />
-          <FooterCol
-            title="ติดต่อ"
-            items={[
-              ["contact@tcca.or.th", "mailto:contact@tcca.or.th"],
-              ["พาร์ทเนอร์และสปอนเซอร์", "#partners"],
-              ["ข้อกำหนดและเงื่อนไข", "#terms"],
-              ["นโยบายความเป็นส่วนตัว", "#privacy"],
-            ]}
-          />
+          {footer.columns.map((col) => (
+            <div key={col.title}>
+              <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-orange-light">
+                {col.title}
+              </h4>
+              <ul className="space-y-3 text-sm">
+                {col.items.map((it) => (
+                  <li key={it.label + it.href}>
+                    <Link
+                      href={it.href}
+                      className="text-cream/70 transition hover:text-cream"
+                    >
+                      {it.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-cream/10 pt-8 text-xs text-cream/60 md:flex-row md:items-center">
-          <p>© {new Date().getFullYear()} Thailand Content Creator Associaton. All rights reserved.</p>
+          <p>{copyright}</p>
           <p className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-full bg-orange-tcca" />
-            ออกแบบและพัฒนาด้วยความภูมิใจ · สำหรับชุมชนครีเอเตอร์ไทย
+            {footer.tagline}
           </p>
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterCol({
-  title,
-  items,
-}: {
-  title: string;
-  items: [string, string][];
-}) {
-  return (
-    <div>
-      <h4 className="mb-4 text-sm font-semibold uppercase tracking-widest text-orange-light">
-        {title}
-      </h4>
-      <ul className="space-y-3 text-sm">
-        {items.map(([label, href]) => (
-          <li key={label}>
-            <Link
-              href={href}
-              className="text-cream/70 transition hover:text-cream"
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

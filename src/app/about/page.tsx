@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { getAbout, mergeCms, pickList } from "@/lib/cms";
+import { fbAbout } from "@/lib/cms-fallback";
 
 export const metadata: Metadata = {
   title: "เกี่ยวกับเรา",
@@ -8,162 +10,89 @@ export const metadata: Metadata = {
     "ทำความรู้จักสมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทย (TCCA) — เป้าหมาย คณะกรรมการ และเส้นทางการขับเคลื่อนวงการครีเอเตอร์ไทย",
 };
 
-const values = [
-  {
-    n: "01",
-    title: "Open",
-    body: "เปิดกว้างสำหรับครีเอเตอร์ทุกขนาด ทุกแพลตฟอร์ม ทุกสไตล์ ไม่จำกัดแบบ",
-    tone: "navy",
-  },
-  {
-    n: "02",
-    title: "Ethical",
-    body: "เคารพจริยธรรมและข้อมูลผู้บริโภค — Creator ต้องน่าเชื่อถือระยะยาว",
-    tone: "orange",
-  },
-  {
-    n: "03",
-    title: "Practical",
-    body: "ลงมือทำจริงด้วยโปรแกรม Workshop, Mentorship และ Tooling ที่ใช้ได้",
-    tone: "cream",
-  },
-  {
-    n: "04",
-    title: "Ambitious",
-    body: "ผลักดันครีเอเตอร์ไทยสู่เวทีภูมิภาคและระดับโลกอย่างมีมาตรฐาน",
-    tone: "gradient",
-  },
-] as const;
+export default async function AboutPage() {
+  const d = mergeCms(await getAbout(), fbAbout);
+  d.values_section.values = pickList(
+    d.values_section.values,
+    fbAbout.values_section.values,
+    (v) => !!(v.title?.trim() || v.body?.trim()),
+  );
+  d.timeline.items = pickList(
+    d.timeline.items,
+    fbAbout.timeline.items,
+    (t) => !!(t.year?.trim() || t.title?.trim() || t.body?.trim()),
+  );
+  d.committee.groups = pickList(
+    d.committee.groups,
+    fbAbout.committee.groups,
+    (g) => !!(g.name?.trim() || g.role_en?.trim()),
+  );
 
-const timeline = [
-  {
-    year: "2024",
-    title: "รวมตัวครั้งแรก",
-    body: "กลุ่มครีเอเตอร์ อินฟลูเอนเซอร์ และผู้นำอุตสาหกรรมเริ่มประชุมร่วมกัน เพื่อร่างแนวทางจัดตั้งสมาคม",
-  },
-  {
-    year: "2025",
-    title: "จดทะเบียนสมาคม",
-    body: "จดทะเบียนเป็นสมาคมผู้สร้างสรรค์คอนเทนต์แห่งประเทศไทยอย่างเป็นทางการ และเปิดรับสมาชิกรุ่นก่อตั้ง",
-  },
-  {
-    year: "2026",
-    title: "เปิดตัวสู่สาธารณะ",
-    body: "จัดงานแถลงข่าวเปิดตัวสมาคมที่ SCBX Next Tech พร้อมประกาศทิศทาง 3 ปีแรก",
-  },
-  {
-    year: "ต่อไป",
-    title: "Creator Summit 2026",
-    body: "จัดงาน Thailand Creator Summit ครั้งแรก รวบรวมแบรนด์ แพลตฟอร์ม และครีเอเตอร์บนเวทีเดียวกัน",
-  },
-];
-
-const committee = [
-  { name: "คณะที่ปรึกษา", role: "Advisors", count: "8 ท่าน" },
-  { name: "คณะกรรมการบริหาร", role: "Executive Committee", count: "12 ท่าน" },
-  { name: "อนุกรรมการวิชาชีพ", role: "Professional Standards", count: "15 ท่าน" },
-  { name: "อนุกรรมการกิจกรรม", role: "Events & Programs", count: "10 ท่าน" },
-];
-
-export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About us"
+        eyebrow={d.hero.eyebrow}
         breadcrumbs={[
           { label: "หน้าแรก", href: "/" },
           { label: "เกี่ยวกับเรา" },
         ]}
-        title={
-          <>
-            สมาคมที่สร้างขึ้น
-            <br />
-            <span className="brand-gradient-text">
-              โดยครีเอเตอร์
-            </span>{" "}
-            เพื่อครีเอเตอร์
-          </>
-        }
-        description="TCCA คือองค์กรกลางที่รวบรวมคอนเทนต์ครีเอเตอร์ อินฟลูเอนเซอร์ นักขายออนไลน์ และผู้ประกอบการในอุตสาหกรรมสร้างสรรค์ — เพื่อขับเคลื่อน Creator Economy ไทยสู่มาตรฐานสากล"
+        title={<span dangerouslySetInnerHTML={{ __html: d.hero.title }} />}
+        description={d.hero.description}
         accent={
           <div className="relative hidden h-full md:block">
             <div className="absolute inset-x-6 top-6 rounded-[2rem] bg-navy-700 p-8 text-cream shadow-xl">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-light">
-                Our North Star
+                {d.north_star.eyebrow}
               </p>
-              <p className="mt-4 font-display text-3xl font-bold !leading-[1.05]">
-                ทำให้ครีเอเตอร์ไทย
-                <br />
-                เป็นวิชาชีพที่ภูมิใจ
-                <br />
-                และเติบโตอย่างยั่งยืน
-              </p>
+              <p
+                className="mt-4 font-display text-3xl font-bold !leading-[1.05]"
+                dangerouslySetInnerHTML={{ __html: d.north_star.title }}
+              />
               <div className="mt-8 flex items-center gap-3 text-sm">
                 <span aria-hidden className="h-px w-10 bg-orange-tcca" />
-                <span className="text-cream/70">TCCA Manifesto · 2026</span>
+                <span className="text-cream/70">{d.north_star.caption}</span>
               </div>
             </div>
           </div>
         }
       />
 
-      {/* STORY */}
       <section className="relative py-20 md:py-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="grid gap-12 md:grid-cols-[1fr_1.2fr]">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-tcca">
-                Our Story
+                {d.story.eyebrow}
               </p>
-              <h2 className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-5xl">
-                จากวันที่ครีเอเตอร์
-                <br />
-                เป็นอาชีพที่ถูก
-                <span className="brand-gradient-text"> มองข้าม</span>
-              </h2>
+              <h2
+                className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-5xl"
+                dangerouslySetInnerHTML={{ __html: d.story.title }}
+              />
             </div>
-            <div className="space-y-5 text-lg leading-relaxed text-navy-600/80">
-              <p>
-                ปี 2020 คอนเทนต์ครีเอเตอร์ไทยกระโดดจากงานอดิเรกกลายเป็นอาชีพหลักของคนรุ่นใหม่
-                นับล้านคน — แต่โครงสร้างรองรับยังเป็นศูนย์
-                ไม่มีมาตรฐานสัญญา ไม่มีการคุ้มครองลิขสิทธิ์
-                และไม่มีเสียงที่ดังพอต่อภาครัฐและแพลตฟอร์ม
-              </p>
-              <p>
-                TCCA ก่อตัวขึ้นจากครีเอเตอร์ตัวจริงที่เจอปัญหาเดียวกัน
-                เรารวมพลังเพื่อเปลี่ยนวงการจาก{" "}
-                <strong className="font-semibold text-navy-700">
-                  ตัวใครตัวมัน
-                </strong>{" "}
-                เป็น{" "}
-                <strong className="font-semibold text-navy-700">
-                  ชุมชนที่มีมาตรฐาน
-                </strong>{" "}
-                — เปิดโอกาสให้ครีเอเตอร์ทุกระดับเติบโตอย่างมั่นคง
-              </p>
-            </div>
+            <div
+              className="space-y-5 text-lg leading-relaxed text-navy-600/80 [&_strong]:font-semibold [&_strong]:text-navy-700"
+              dangerouslySetInnerHTML={{ __html: d.story.body }}
+            />
           </div>
         </div>
       </section>
 
-      {/* VALUES */}
       <section className="relative py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-tcca">
-                Our Values
+                {d.values_section.eyebrow}
               </p>
-              <h2 className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-6xl">
-                4 คุณค่าที่
-                <br />
-                ยึดถือร่วมกัน
-              </h2>
+              <h2
+                className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-6xl"
+                dangerouslySetInnerHTML={{ __html: d.values_section.title }}
+              />
             </div>
           </div>
 
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => {
+            {d.values_section.values.map((v) => {
               const toneClass =
                 v.tone === "navy"
                   ? "bg-navy-700 text-cream"
@@ -174,15 +103,12 @@ export default function AboutPage() {
                       : "relative overflow-hidden text-white";
               return (
                 <article
-                  key={v.n}
+                  key={v.number + v.title}
                   className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 transition-transform duration-300 hover:-translate-y-1 ${toneClass}`}
                 >
                   {v.tone === "gradient" && (
                     <>
-                      <div
-                        aria-hidden
-                        className="absolute inset-0 brand-gradient"
-                      />
+                      <div aria-hidden className="absolute inset-0 brand-gradient" />
                       <div
                         aria-hidden
                         className="absolute inset-0 bg-navy-800/20 mix-blend-multiply"
@@ -191,7 +117,7 @@ export default function AboutPage() {
                   )}
                   <div className="relative">
                     <span className="text-xs font-bold uppercase tracking-[0.28em] opacity-60">
-                      {v.n}
+                      {v.number}
                     </span>
                     <h3 className="mt-3 font-display text-3xl font-bold">
                       {v.title}
@@ -207,7 +133,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TIMELINE */}
       <section className="relative bg-navy-700 py-20 text-cream md:py-28">
         <div aria-hidden className="absolute inset-0 dot-grid-light opacity-30" />
         <div
@@ -216,10 +141,10 @@ export default function AboutPage() {
         />
         <div className="relative mx-auto max-w-7xl px-5 md:px-8">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-light">
-            Journey
+            {d.timeline.eyebrow}
           </p>
           <h2 className="mt-4 font-display text-4xl font-bold !leading-[1.05] md:text-6xl">
-            เส้นทางของเรา
+            {d.timeline.title}
           </h2>
 
           <div className="relative mt-14">
@@ -228,11 +153,11 @@ export default function AboutPage() {
               className="absolute left-4 top-0 bottom-0 w-px bg-cream/15 md:left-1/2 md:-translate-x-1/2"
             />
             <ol className="space-y-10">
-              {timeline.map((t, i) => {
+              {d.timeline.items.map((t, i) => {
                 const isRight = i % 2 === 1;
                 return (
                   <li
-                    key={t.year}
+                    key={t.year + t.title}
                     className="relative grid gap-4 md:grid-cols-2 md:gap-12"
                   >
                     <div
@@ -272,37 +197,34 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* COMMITTEE */}
       <section className="relative py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="grid gap-10 md:grid-cols-[1fr_1.2fr]">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-tcca">
-                Committee
+                {d.committee.eyebrow}
               </p>
-              <h2 className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-5xl">
-                คณะทำงานของ
-                <br />
-                สมาคม
-              </h2>
+              <h2
+                className="mt-4 font-display text-4xl font-bold !leading-[1.05] text-navy-700 md:text-5xl"
+                dangerouslySetInnerHTML={{ __html: d.committee.title }}
+              />
               <p className="mt-6 max-w-md text-lg leading-relaxed text-navy-600/80">
-                ทีมที่อยู่เบื้องหลัง TCCA คือผู้นำจริงในวงการครีเอเตอร์
-                สื่อ เอเจนซี่ และแพลตฟอร์มดิจิทัล ที่รู้ปัญหาและรับฟังชุมชน
+                {d.committee.description}
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
-              {committee.map((c) => (
+              {d.committee.groups.map((c) => (
                 <div
-                  key={c.name}
+                  key={c.name + c.role_en}
                   className="group relative overflow-hidden rounded-3xl border border-navy-600/10 bg-white p-6 transition-all hover:-translate-y-1 hover:border-orange-tcca/40 hover:shadow-lg"
                 >
                   <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-orange-tcca">
-                    {c.role}
+                    {c.role_en}
                   </p>
                   <p className="mt-3 font-display text-2xl font-bold text-navy-700">
                     {c.name}
                   </p>
-                  <p className="mt-2 text-sm text-navy-600/70">{c.count}</p>
+                  <p className="mt-2 text-sm text-navy-600/70">{c.count_label}</p>
                   <span
                     aria-hidden
                     className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full bg-navy-700 text-cream transition-transform group-hover:rotate-45"
@@ -316,38 +238,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
       <section className="relative pb-24 md:pb-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-navy-700 p-10 text-cream md:p-16">
-            <div
-              aria-hidden
-              className="absolute inset-0 brand-gradient opacity-15"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 dot-grid-light opacity-30"
-            />
+            <div aria-hidden className="absolute inset-0 brand-gradient opacity-15" />
+            <div aria-hidden className="absolute inset-0 dot-grid-light opacity-30" />
             <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-light">
-                  Join us
+                  {d.final_cta.eyebrow}
                 </p>
-                <h2 className="mt-4 font-display text-4xl font-bold !leading-[1.05] md:text-6xl">
-                  อยากเป็นส่วนหนึ่ง
-                  <br />
-                  ของเรา?
-                </h2>
+                <h2
+                  className="mt-4 font-display text-4xl font-bold !leading-[1.05] md:text-6xl"
+                  dangerouslySetInnerHTML={{ __html: d.final_cta.title }}
+                />
                 <p className="mt-5 max-w-lg text-lg text-cream/80">
-                  เปิดรับสมาชิกรุ่นก่อตั้ง 1,000 คนแรก —
-                  ร่วมวางรากฐานวงการครีเอเตอร์ไทยไปด้วยกัน
+                  {d.final_cta.description}
                 </p>
               </div>
               <Link
-                href="/register"
+                href={d.final_cta.href}
                 className="font-display group inline-flex h-16 items-center gap-3 rounded-full bg-orange-tcca px-8 text-xl font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-orange-light hover:shadow-xl"
               >
-                สมัครสมาชิก
+                {d.final_cta.label}
                 <span
                   aria-hidden
                   className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:rotate-45"

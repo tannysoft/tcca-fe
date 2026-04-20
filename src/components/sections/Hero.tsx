@@ -1,9 +1,14 @@
+import Image from "next/image";
 import { HeroVisual } from "@/components/HeroVisual";
+import type { HomeCms } from "@/lib/cms";
+import { fbHome } from "@/lib/cms-fallback";
 
-export function Hero() {
+export function Hero({ data }: { data?: HomeCms["hero"] }) {
+  const d = data ?? fbHome.hero;
+  const marquee = d.marquee.length ? d.marquee : fbHome.hero.marquee;
+
   return (
     <section className="relative isolate overflow-hidden pt-28 pb-12 md:pt-36 md:pb-16">
-      {/* background: dot grid + gradient blobs */}
       <div aria-hidden className="absolute inset-0 dot-grid opacity-70" />
       <div
         aria-hidden
@@ -15,14 +20,13 @@ export function Hero() {
       />
 
       <div className="relative mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-[1.15fr_1fr] md:px-8">
-        {/* LEFT: copy */}
         <div className="flex flex-col justify-center">
           <h1 className="text-balance font-display text-5xl font-bold leading-[0.95] tracking-tight text-navy-700 md:text-7xl lg:text-[88px]">
-            บ้านของ
+            {d.line1}
             <br />
             <span className="relative inline-block">
               <span className="brand-gradient-text">
-                คอนเทนต์<wbr />ครีเอเตอร์
+                {d.highlight}
               </span>
               <svg
                 aria-hidden
@@ -40,24 +44,20 @@ export function Hero() {
               </svg>
             </span>
             <br />
-            ของประเทศไทย
+            {d.line2}
           </h1>
 
-          <p className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-navy-600/80 md:text-xl">
-            <strong className="font-semibold text-navy-700">
-              Thailand Content Creator Associaton
-            </strong>{" "}
-            รวมพลังครีเอเตอร์ อินฟลูเอนเซอร์ และนักขายออนไลน์
-            เพื่อยกระดับมาตรฐานวิชาชีพ สร้างโอกาส และขับเคลื่อน Creator Economy
-            ของไทยให้เติบโตอย่างสร้างสรรค์และยั่งยืน
-          </p>
+          <div
+            className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-navy-600/80 md:text-xl [&_strong]:font-semibold [&_strong]:text-navy-700 [&_p]:inline"
+            dangerouslySetInnerHTML={{ __html: d.description }}
+          />
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href="#join"
+              href={d.primary_cta_href || "#join"}
               className="font-display group inline-flex h-16 items-center gap-3 rounded-full bg-navy-700 px-8 text-xl font-semibold text-cream shadow-lg shadow-navy-700/20 transition-all duration-300 hover:-translate-y-1 hover:bg-navy-800 hover:shadow-xl"
             >
-              ร่วมเป็นสมาชิก
+              {d.primary_cta_label}
               <span
                 aria-hidden
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-orange-tcca text-white transition-transform duration-300 group-hover:rotate-45"
@@ -66,10 +66,10 @@ export function Hero() {
               </span>
             </a>
             <a
-              href="#about"
+              href={d.secondary_cta_href || "#about"}
               className="font-display group inline-flex h-16 items-center gap-3 rounded-full border border-navy-600/20 bg-white/70 px-8 text-xl font-semibold text-navy-700 shadow-lg shadow-navy-700/5 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-navy-600/40 hover:bg-white hover:shadow-xl"
             >
-              รู้จักเรามากขึ้น
+              {d.secondary_cta_label}
               <span
                 aria-hidden
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-navy-600/30 bg-white text-navy-700 transition-transform duration-300 group-hover:rotate-45"
@@ -80,26 +80,27 @@ export function Hero() {
           </div>
         </div>
 
-        {/* RIGHT: creative vector collage */}
         <div className="relative hidden md:block">
-          <HeroVisual />
+          {d.visual?.url ? (
+            <Image
+              src={d.visual.url}
+              alt={d.visual.alt || ""}
+              width={d.visual.width ?? 600}
+              height={d.visual.height ?? 600}
+              className="h-full w-full rounded-3xl object-cover"
+              priority
+            />
+          ) : (
+            <HeroVisual />
+          )}
         </div>
       </div>
 
-      {/* scrolling tag line */}
       <div className="relative mt-20 overflow-hidden border-y border-navy-600/10 bg-white/50 py-5 backdrop-blur">
         <div className="flex w-max animate-marquee gap-12 whitespace-nowrap">
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex items-center gap-12">
-              {[
-                "CREATE",
-                "CONNECT",
-                "COLLABORATE",
-                "CULTIVATE",
-                "COMMUNITY",
-                "CREATIVITY",
-                "CREDIBILITY",
-              ].map((w) => (
+              {marquee.map((w) => (
                 <span
                   key={w + i}
                   className="flex items-center gap-12 font-display text-4xl font-semibold tracking-tight text-navy-700/70 md:text-5xl"
