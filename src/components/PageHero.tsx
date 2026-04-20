@@ -15,17 +15,10 @@ export function PageHero({
   accent?: ReactNode;
 }) {
   return (
-    <section className="relative isolate overflow-hidden pt-28 pb-12 md:pt-36 md:pb-16">
-      <div aria-hidden className="absolute inset-0 dot-grid opacity-60" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 -left-24 h-[420px] w-[420px] rounded-full blur-3xl opacity-30 brand-gradient animate-float-slow"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-20 -right-32 h-[420px] w-[420px] rounded-full blur-3xl opacity-20 bg-orange-tcca animate-float"
-      />
-
+    <section className="relative pt-28 pb-12 md:pt-36 md:pb-16">
+      {/* The ambient gradient + dot-grid are provided by <PageBackdrop /> at
+          the page root, so the hero stays edge-to-edge transparent and never
+          clips its own decoration into a visible seam. */}
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {breadcrumbs && (
           <nav

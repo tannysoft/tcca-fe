@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prepareArticleBody, type ArticleCms } from "@/lib/cms";
+import { ArticleCard } from "@/components/cards/ArticleCard";
 
 const FALLBACK_COVER = "/news/press-conference.jpg";
 
@@ -159,41 +160,23 @@ export function ArticleView({ article }: { article: ArticleCms }) {
               </div>
             )}
 
-            {(article.categories.length > 0 || article.hashtags.length > 0) && (
+            {article.hashtags.length > 0 && (
               <div className="border-t border-navy-600/10 pt-10">
-                {article.categories.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-navy-600/60">
-                      หมวดหมู่
-                    </span>
-                    {article.categories.map((c) => (
-                      <Link
-                        key={c.slug}
-                        href={`/category/${c.slug}`}
-                        className="inline-flex items-center rounded-full bg-navy-700 px-3.5 py-1.5 text-xs font-semibold text-cream transition hover:bg-orange-tcca"
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-                {article.hashtags.length > 0 && (
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-navy-600/60">
-                      แท็ก
-                    </span>
-                    {article.hashtags.map((t) => (
-                      <Link
-                        key={t.slug}
-                        href={`/tag/${t.slug}`}
-                        className="inline-flex items-center rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-navy-700 ring-1 ring-navy-600/10 transition hover:bg-orange-soft hover:text-orange-tcca hover:ring-orange-tcca/40"
-                      >
-                        <span aria-hidden className="mr-0.5 text-orange-tcca">#</span>
-                        {t.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-navy-600/60">
+                    แท็ก
+                  </span>
+                  {article.hashtags.map((t) => (
+                    <Link
+                      key={t.slug}
+                      href={`/tag/${t.slug}`}
+                      className="inline-flex items-center rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-navy-700 ring-1 ring-navy-600/10 transition hover:bg-orange-soft hover:text-orange-tcca hover:ring-orange-tcca/40"
+                    >
+                      <span aria-hidden className="mr-0.5 text-orange-tcca">#</span>
+                      {t.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </article>
@@ -222,24 +205,24 @@ export function ArticleView({ article }: { article: ArticleCms }) {
                         <path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h10v2H4z" />
                       </svg>
                     </span>
-                    <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-tcca">
+                    <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-orange-tcca">
                       On this page
                     </p>
                   </div>
-                  <ol className="mt-5 space-y-1 text-sm">
+                  <ol className="mt-5 space-y-1">
                     {toc.map((t, i) => (
                       <li key={t.id} className="group">
                         <a
                           href={`#${t.id}`}
-                          className="relative flex items-start gap-3 rounded-xl px-3 py-2.5 text-navy-700 transition hover:bg-orange-soft"
+                          className="relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-navy-700 transition hover:bg-orange-soft"
                         >
                           <span
                             aria-hidden
-                            className="mt-0.5 font-mono text-[11px] font-bold text-orange-tcca/70 group-hover:text-orange-tcca"
+                            className="font-mono text-sm font-bold text-orange-tcca/70 group-hover:text-orange-tcca"
                           >
                             {String(i + 1).padStart(2, "0")}
                           </span>
-                          <span className="font-display font-medium leading-snug">
+                          <span className="font-display text-base font-medium leading-snug">
                             {t.label}
                           </span>
                         </a>
@@ -250,14 +233,30 @@ export function ArticleView({ article }: { article: ArticleCms }) {
               )}
 
               <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-navy-600/10">
-                <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-orange-tcca">
+                <p className="font-display text-sm font-bold uppercase tracking-[0.22em] text-orange-tcca">
                   Share
                 </p>
                 <div className="mt-4 grid grid-cols-4 gap-2">
-                  <ShareButton label="X" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}`} />
-                  <ShareButton label="FB" href="#" />
-                  <ShareButton label="LN" href="#" />
-                  <ShareButton label="IG" href="#" />
+                  <ShareButton
+                    label="Share on X"
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}`}
+                    Icon={XIcon}
+                  />
+                  <ShareButton
+                    label="Share on Facebook"
+                    href="#"
+                    Icon={FacebookIcon}
+                  />
+                  <ShareButton
+                    label="Share on LINE"
+                    href="#"
+                    Icon={LineIcon}
+                  />
+                  <ShareButton
+                    label="Share on Instagram"
+                    href="#"
+                    Icon={InstagramIcon}
+                  />
                 </div>
               </div>
 
@@ -292,7 +291,18 @@ export function ArticleView({ article }: { article: ArticleCms }) {
                         aria-hidden
                         className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:rotate-45"
                       >
-                        ↗
+                        <svg
+                          viewBox="0 0 16 16"
+                          className="h-3 w-3"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 11 L11 5" />
+                          <path d="M5.5 5 H11 V10.5" />
+                        </svg>
                       </span>
                     </button>
                   </form>
@@ -319,32 +329,8 @@ export function ArticleView({ article }: { article: ArticleCms }) {
             </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-3">
-              {article.related.map((r) => (
-                <Link
-                  href={`/news/${r.slug}`}
-                  key={r.slug}
-                  className="group overflow-hidden rounded-3xl bg-white ring-1 ring-navy-600/10 transition-all hover:-translate-y-1 hover:ring-orange-tcca/40"
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={r.cover?.url ?? FALLBACK_COVER}
-                      alt={r.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                    {r.tag_label && (
-                      <span className="absolute left-4 top-4 rounded-full bg-navy-700 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-cream">
-                        {r.tag_label}
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-lg font-bold !leading-[1.15] text-navy-700">
-                      {r.title}
-                    </h3>
-                    <p className="mt-2 text-xs text-navy-600/60">{r.date_th}</p>
-                  </div>
-                </Link>
+              {article.related.map((r, i) => (
+                <ArticleCard key={r.slug} data={r} idx={i} size="sm" showExcerpt={false} />
               ))}
             </div>
           </div>
@@ -354,16 +340,82 @@ export function ArticleView({ article }: { article: ArticleCms }) {
   );
 }
 
-function ShareButton({ label, href }: { label: string; href: string }) {
+function ShareButton({
+  label,
+  href,
+  Icon,
+}: {
+  label: string;
+  href: string;
+  Icon: () => React.JSX.Element;
+}) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Share on ${label}`}
-      className="font-display inline-flex h-10 items-center justify-center rounded-xl border border-navy-600/10 bg-cream/40 text-xs font-bold text-navy-700 transition hover:border-orange-tcca/40 hover:bg-orange-soft hover:text-orange-tcca"
+      aria-label={label}
+      title={label}
+      className="inline-flex h-10 items-center justify-center rounded-xl border border-navy-600/10 bg-cream/40 text-navy-700 transition hover:border-orange-tcca/40 hover:bg-orange-soft hover:text-orange-tcca"
     >
-      {label}
+      <Icon />
     </a>
+  );
+}
+
+const socialIconClass = "h-[18px] w-[18px]";
+
+function FacebookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={socialIconClass}
+      aria-hidden
+    >
+      <path d="M13.5 22v-8h2.7l.4-3.2H13.5V8.7c0-.9.3-1.5 1.6-1.5h1.7V4.3c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.5H7.7V14h2.7v8h3.1z" />
+    </svg>
+  );
+}
+function InstagramIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={socialIconClass}
+      aria-hidden
+    >
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+function XIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={socialIconClass}
+      aria-hidden
+    >
+      <path d="M17.9 3h3.4l-7.4 8.5L22.6 21H16l-5-6.6L5.2 21H1.8l7.9-9L1.2 3h6.7l4.6 6.1L17.9 3zm-1.2 16h1.9L7.4 5H5.4l11.3 14z" />
+    </svg>
+  );
+}
+function LineIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={socialIconClass}
+      aria-hidden
+    >
+      <path d="M12 2C6.5 2 2 5.6 2 10c0 4 3.6 7.3 8.4 7.9.3.1.8.2.9.5.1.3.1.7 0 .9 0 0-.1.7-.2 1-.1.3-.2 1.2 1 .7 1.2-.5 6.6-3.9 9-6.7C22.4 12.7 23 11.4 23 10c0-4.4-5-8-11-8zM7.3 13H5.4c-.3 0-.5-.2-.5-.5V8.8c0-.3.2-.5.5-.5s.5.2.5.5V12h1.4c.3 0 .5.2.5.5s-.2.5-.5.5zm1.9-.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.8c0-.3.2-.5.5-.5s.5.2.5.5v3.7zm4.7 0c0 .2-.1.4-.3.5h-.2c-.2 0-.3-.1-.4-.2l-1.9-2.6v2.3c0 .3-.2.5-.5.5s-.5-.2-.5-.5V8.8c0-.2.1-.4.3-.5.1 0 .1-.1.2-.1.1 0 .3.1.4.2l1.9 2.6V8.8c0-.3.2-.5.5-.5s.5.2.5.5v3.7zm3.1-2.3c.3 0 .5.2.5.5s-.2.5-.5.5h-1.4v.9H17c.3 0 .5.2.5.5s-.2.5-.5.5h-1.9c-.3 0-.5-.2-.5-.5V8.8c0-.3.2-.5.5-.5H17c.3 0 .5.2.5.5s-.2.5-.5.5h-1.4v.9H17z" />
+    </svg>
   );
 }
